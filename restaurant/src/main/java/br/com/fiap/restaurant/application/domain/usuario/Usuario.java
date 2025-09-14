@@ -61,6 +61,31 @@ public class Usuario {
         return modifiedAt;
     }
 
+    public Usuario update(String nome, String email, Address endereco, boolean actived){
+        if(!actived)
+            return this;
+        this.nome = nome;
+        this.email = email;
+        this.endereco = endereco;
+        this.modifiedAt = LocalDateTime.now();
+        return this;
+    }
+
+    public Usuario updatePassword(String senha) {
+        if(!actived)
+            return this;
+        this.senha = senha;
+        return this;
+    }
+
+    public Usuario delete(boolean actived) {
+        if(!actived)
+            return this;
+        else
+            this.actived = false;
+        return this;
+    }
+
     public static class UsuarioBuilder {
         private String nome;
         private String usuario;
