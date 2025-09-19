@@ -1,4 +1,4 @@
-package br.com.fiap.restaurant.application.gateway.outbound;
+package br.com.fiap.restaurant.application.gateway.outbound.usuario;
 
 import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;

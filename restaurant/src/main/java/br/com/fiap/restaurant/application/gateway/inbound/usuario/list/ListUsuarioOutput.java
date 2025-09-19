@@ -1,4 +1,4 @@
-package br.com.fiap.restaurant.application.gateway.inbound.list;
+package br.com.fiap.restaurant.application.gateway.inbound.usuario.list;
 
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 import br.com.fiap.restaurant.application.domain.usuario.Role;

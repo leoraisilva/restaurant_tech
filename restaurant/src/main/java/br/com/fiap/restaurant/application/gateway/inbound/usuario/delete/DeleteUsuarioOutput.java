@@ -1,13 +1,12 @@
-package br.com.fiap.restaurant.application.gateway.inbound.update;
+package br.com.fiap.restaurant.application.gateway.inbound.usuario.delete;
 
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 import br.com.fiap.restaurant.application.domain.usuario.Role;
 import br.com.fiap.restaurant.application.domain.usuario.Usuario;
-import br.com.fiap.restaurant.application.gateway.inbound.create.CreateUsuarioOutput;
 
 import java.time.LocalDateTime;
 
-public record UpdateUsuarioOutput (String nome,
+public record DeleteUsuarioOutput (String nome,
                                    String usuario,
                                    String senha,
                                    String email,
@@ -16,11 +15,8 @@ public record UpdateUsuarioOutput (String nome,
                                    boolean actived,
                                    LocalDateTime createdAt,
                                    LocalDateTime modifiedAt) {
-    public static UpdateUsuarioOutput from(final Usuario usuario) {
-        if (!usuario.isActived()){
-            throw new IllegalArgumentException("Nao é Possivel acessar o usuario");
-        }
-        return new UpdateUsuarioOutput(
+    public static DeleteUsuarioOutput from(final Usuario usuario) {
+        return new DeleteUsuarioOutput(
                 usuario.getNome(),
                 usuario.getUsuario(),
                 usuario.getSenha(),

@@ -3,22 +3,21 @@ package br.com.fiap.restaurant.application.services;
 import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;
 import br.com.fiap.restaurant.application.domain.usuario.*;
-import br.com.fiap.restaurant.application.gateway.inbound.create.CreateUsuario;
-import br.com.fiap.restaurant.application.gateway.inbound.create.CreateUsuarioInput;
-import br.com.fiap.restaurant.application.gateway.inbound.create.CreateUsuarioOutput;
-import br.com.fiap.restaurant.application.gateway.inbound.delete.DeleteUsuario;
-import br.com.fiap.restaurant.application.gateway.inbound.delete.DeleteUsuarioOutput;
-import br.com.fiap.restaurant.application.gateway.inbound.get.GetUsuario;
-import br.com.fiap.restaurant.application.gateway.inbound.get.GetUsuarioOutput;
-import br.com.fiap.restaurant.application.gateway.inbound.list.ListUsuario;
-import br.com.fiap.restaurant.application.gateway.inbound.list.ListUsuarioOutput;
-import br.com.fiap.restaurant.application.gateway.inbound.update.UpdateUsuario;
-import br.com.fiap.restaurant.application.gateway.inbound.update.UpdateUsuarioInput;
-import br.com.fiap.restaurant.application.gateway.inbound.update.UpdateUsuarioOutput;
-import br.com.fiap.restaurant.application.gateway.outbound.UsuarioRepository;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuario;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioInput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioOutput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.delete.DeleteUsuario;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.delete.DeleteUsuarioOutput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.get.GetUsuario;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.get.GetUsuarioOutput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.list.ListUsuario;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.list.ListUsuarioOutput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuario;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuarioInput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuarioOutput;
+import br.com.fiap.restaurant.application.gateway.outbound.usuario.UsuarioRepository;
 
 import java.util.Objects;
-import java.util.function.Function;
 
 public class UsuarioService implements CreateUsuario, UpdateUsuario, GetUsuario, DeleteUsuario, ListUsuario {
 

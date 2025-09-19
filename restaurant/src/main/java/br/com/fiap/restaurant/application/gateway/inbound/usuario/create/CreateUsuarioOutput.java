@@ -1,4 +1,4 @@
-package br.com.fiap.restaurant.application.gateway.inbound.create;
+package br.com.fiap.restaurant.application.gateway.inbound.usuario.create;
 
 import br.com.fiap.restaurant.application.domain.usuario.*;
 import java.time.LocalDateTime;

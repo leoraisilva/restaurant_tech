@@ -1,4 +1,4 @@
-package br.com.fiap.restaurant.infra.adapter.outbound.persistence;
+package br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario;
 
 import jakarta.persistence.*;
 
