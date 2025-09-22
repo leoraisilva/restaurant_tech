@@ -26,4 +26,18 @@ public record ListUsuarioOutput(String nome,
                 usuario.getCreatedAt(),
                 usuario.getModifiedAt());
     }
+
+    public static Usuario to(ListUsuarioOutput listUsuarioOutput) {
+        return new Usuario.UsuarioBuilder()
+                .withNome(listUsuarioOutput.nome())
+                .withUsuario(listUsuarioOutput.usuario())
+                .withSenha(listUsuarioOutput.senha())
+                .withEmail(listUsuarioOutput.email())
+                .withRegras(listUsuarioOutput.regras())
+                .withEndereco(listUsuarioOutput.endereco())
+                .actived(listUsuarioOutput.actived())
+                .withModifiedAt(listUsuarioOutput.modifiedAt())
+                .build();
+    }
+
 }

@@ -3,6 +3,7 @@ package br.com.fiap.restaurant.application.gateway.inbound.usuario.get;
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 import br.com.fiap.restaurant.application.domain.usuario.Role;
 import br.com.fiap.restaurant.application.domain.usuario.Usuario;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuarioOutput;
 
 import java.time.LocalDateTime;
 
@@ -28,5 +29,18 @@ public record GetUsuarioOutput (String nome,
                 usuario.isActived(),
                 usuario.getCreatedAt(),
                 usuario.getModifiedAt());
+    }
+
+    public static Usuario to(GetUsuarioOutput getUsuarioOutput) {
+        return new Usuario.UsuarioBuilder()
+                .withNome(getUsuarioOutput.nome())
+                .withUsuario(getUsuarioOutput.usuario())
+                .withSenha(getUsuarioOutput.senha())
+                .withEmail(getUsuarioOutput.email())
+                .withRegras(getUsuarioOutput.regras())
+                .withEndereco(getUsuarioOutput.endereco())
+                .actived(getUsuarioOutput.actived())
+                .withModifiedAt(getUsuarioOutput.modifiedAt())
+                .build();
     }
 }

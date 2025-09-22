@@ -1,15 +1,16 @@
-package br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario;
+package br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity;
 
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 import br.com.fiap.restaurant.application.domain.usuario.Usuario;
 import br.com.fiap.restaurant.application.domain.usuario.UsuarioFactory;
+import br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity.IUsuarioMapper;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.AddressEntity;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.UsuarioEntity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class UsuarioMapper {
+public class UsuarioMapper implements IUsuarioMapper {
     private final UsuarioFactory factory;
     private final AddressEntity addressEntity;
     private final Address address;

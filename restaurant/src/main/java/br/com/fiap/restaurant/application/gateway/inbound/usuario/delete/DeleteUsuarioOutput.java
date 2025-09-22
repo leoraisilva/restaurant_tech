@@ -28,4 +28,17 @@ public record DeleteUsuarioOutput (String nome,
                 usuario.getModifiedAt()
         );
     }
+
+    public static Usuario to(final DeleteUsuarioOutput deleteUsuarioOutput) {
+        return new Usuario.UsuarioBuilder()
+                .withNome(deleteUsuarioOutput.nome())
+                .withUsuario(deleteUsuarioOutput.usuario())
+                .withSenha(deleteUsuarioOutput.senha())
+                .withEmail(deleteUsuarioOutput.email())
+                .withRegras(deleteUsuarioOutput.regras())
+                .withEndereco(deleteUsuarioOutput.endereco())
+                .actived(deleteUsuarioOutput.actived())
+                .withModifiedAt(deleteUsuarioOutput.modifiedAt())
+                .build();
+    }
 }

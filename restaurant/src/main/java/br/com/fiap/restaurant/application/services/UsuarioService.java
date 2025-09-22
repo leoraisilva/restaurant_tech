@@ -32,7 +32,7 @@ public class UsuarioService implements CreateUsuario, UpdateUsuario, GetUsuario,
 
     @Override
     public CreateUsuarioOutput createUsuario(CreateUsuarioInput usuarioInput) {
-        var input = factory.newUsuario(usuarioInput.nome(), usuarioInput.usuario(), usuarioInput.senha(), usuarioInput.email(), Role.CLIENT, null);
+        var input = factory.newUsuario(usuarioInput.nome(), usuarioInput.usuario(), usuarioInput.senha(), usuarioInput.email(), usuarioInput.regras(), usuarioInput.endereco());
         var usuario = repository.create(input);
         return CreateUsuarioOutput.from(usuario);
     }
@@ -54,7 +54,7 @@ public class UsuarioService implements CreateUsuario, UpdateUsuario, GetUsuario,
     @Override
     public DeleteUsuarioOutput deleteUsuario(String username) {
         var usuario = repository.findByUsername(username);
-        return DeleteUsuarioOutput.from(usuario.delete(usuario.isActived()));
+        return DeleteUsuarioOutput.from(repository.delete(usuario));
     }
 
     @Override

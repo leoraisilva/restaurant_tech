@@ -25,4 +25,17 @@ public record CreateUsuarioOutput(String nome,
                 usuario.getModifiedAt()
         );
     }
+
+    public static Usuario to(final CreateUsuarioOutput createUsuarioOutput) {
+        return new Usuario.UsuarioBuilder()
+                .withNome(createUsuarioOutput.nome())
+                .withUsuario(createUsuarioOutput.usuario())
+                .withSenha(createUsuarioOutput.senha())
+                .withEmail(createUsuarioOutput.email())
+                .withRegras(createUsuarioOutput.regras())
+                .withEndereco(createUsuarioOutput.endereco())
+                .actived(createUsuarioOutput.actived())
+                .withModifiedAt(createUsuarioOutput.modifiedAt())
+                .build();
+    }
 }
