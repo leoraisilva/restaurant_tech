@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "address")
 public class AddressEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String idEndereco;
     @Column(name = "CEP", unique = true, nullable = false)
     private String CEP;
     @Column(name = "logradouro")
@@ -17,13 +15,14 @@ public class AddressEntity {
     @Column(name = "cidade")
     private String cidade;
 
-    public AddressEntity(String idEndereco, String CEP, String logradouro, String bairro, String cidade) {
-        this.idEndereco = idEndereco;
+    public AddressEntity(String CEP, String logradouro, String bairro, String cidade) {
         this.CEP = CEP;
         this.logradouro = logradouro;
         this.bairro = bairro;
         this.cidade = cidade;
     }
+
+    public AddressEntity() {}
 
     public String getCEP() {
         return CEP;

@@ -66,10 +66,9 @@ public class Usuario {
         return modifiedAt;
     }
 
-    public Usuario update(String nome, String email, Address endereco, Integer numero, boolean actived){
-        if(!actived)
-            return this;
+    public Usuario update(String nome, String username, String email, Address endereco, Integer numero){
         this.nome = nome;
+        this.username= username;
         this.email = email;
         this.endereco = endereco;
         this.numero = numero;

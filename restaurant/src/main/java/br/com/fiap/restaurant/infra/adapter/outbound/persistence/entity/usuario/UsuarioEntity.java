@@ -22,8 +22,8 @@ public class UsuarioEntity {
     private String email;
     @Column(name = "regras", nullable = false)
     private Role regras;
-    @Column(name = "cep", unique = true, nullable = false)
-    private String cep;
+    @Column(name = "cep", nullable = false)
+    private String CEP;
     @Column(name = "numero")
     private Integer numero;
     @Column(name = "actived", nullable = false)
@@ -33,19 +33,20 @@ public class UsuarioEntity {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    public UsuarioEntity(String idUsuario, String nome, String username, String senha, String email, Role regras, String cep, Integer numero , boolean actived, LocalDateTime createdAt, LocalDateTime modifiedAt) {
-        this.idUsuario = idUsuario;
+    public UsuarioEntity(String nome, String username, String senha, String email, Role regras, String CEP, Integer numero , boolean actived, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.nome = nome;
         this.username = username;
         this.senha = senha;
         this.email = email;
         this.regras = regras;
-        this.cep = cep;
+        this.CEP = CEP;
         this.numero = numero;
         this.actived = actived;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
+
+    public UsuarioEntity () {}
 
     public String getIdUsuario() {
         return idUsuario;
@@ -95,12 +96,12 @@ public class UsuarioEntity {
         this.regras = regras;
     }
 
-    public String getCep() {
-        return cep;
+    public String getCEP() {
+        return CEP;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setCEP(String CEP) {
+        this.CEP = CEP;
     }
 
     public Integer getNumero() {

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @Repository
 public class UsuarioImplRepository implements UsuarioRepository {
@@ -33,48 +34,65 @@ public class UsuarioImplRepository implements UsuarioRepository {
 
     @Override
     public Usuario create(Usuario usuario) {
-        AddressEntity address = findByCEP(usuario.getEndereco().CEP());
-        if(address.getCEP().isEmpty())
-            addressRepository.save(addressMapper.toEntity(usuario.getEndereco()));
+        var addressDomain = usuario.getEndereco();
+        AddressEntity address = findByCEP(addressDomain.CEP());
+        if(address == null)
+            addressRepository.save(addressMapper.toEntity(addressDomain));
         UsuarioEntity usuarioEntity = usuarioMapper.toEntity(usuario);
         usuarioRepository.save(usuarioEntity);
-        return usuarioMapper.toDomain(usuarioEntity);
+        usuario = usuarioMapper.toDomain(usuarioEntity);
+        usuario.update(usuario.getNome(), usuario.getUsername(), usuario.getEmail(), addressDomain, usuario.getNumero());
+        return usuario;
     }
 
     @Override
     public Usuario findByUsername(String username) {
-        return usuarioMapper.toDomain(usuarioRepository.findByUsername(username));
+        var usuarioEntity =  usuarioRepository.findByUsername(username);
+        var addressDomain = addressMapper.toDomain(addressRepository.findByCEP(usuarioEntity.getCEP()));
+        if(usuarioEntity.isActived()) {
+            var usuario = usuarioMapper.toDomain(usuarioRepository.findByUsername(username));
+            usuario.update(usuario.getNome(), usuario.getUsername(), usuario.getEmail(), addressDomain, usuario.getNumero());
+            return usuario;
+        }
+        return null;
     }
 
     @Override
     public Usuario update(Usuario usuario) {
         var usuarioEntity =  usuarioRepository.findByUsername(usuario.getUsername());
-        AddressEntity address = findByCEP(usuario.getEndereco().CEP());
-        if(address.getCEP().isEmpty())
-            addressRepository.save(addressMapper.toEntity(usuario.getEndereco()));
+        var addressDomain = usuario.getEndereco();
+        AddressEntity address = findByCEP(addressDomain.CEP());
+        if(address == null)
+            addressRepository.save(addressMapper.toEntity(addressDomain));
         if(usuarioEntity.isActived()){
-            usuarioEntity.setIdUsuario(usuario.getUsername());
+            usuarioEntity.setUsername(usuario.getUsername());
             usuarioEntity.setNome(usuario.getNome());
             usuarioEntity.setRegras(usuario.getRegras());
             usuarioEntity.setModifiedAt(LocalDateTime.now());
-            usuarioEntity.setCep(address.getCEP());
+            usuarioEntity.setCEP(addressDomain.CEP());
         }
-        return usuarioMapper.toDomain(usuarioRepository.save(usuarioEntity));
+        usuario = usuarioMapper.toDomain(usuarioRepository.save(usuarioEntity));
+        usuario.update(usuario.getNome(), usuario.getUsername(), usuario.getEmail(), addressDomain, usuario.getNumero());
+        return usuario;
     }
 
     @Override
     public Usuario delete(Usuario usuario) {
         var usuarioEntity =  usuarioRepository.findByUsername(usuario.getUsername());
+        var addressDomain = usuario.getEndereco();
         if(usuarioEntity.isActived()){
             usuarioEntity.setActived(false);
             usuarioEntity.setModifiedAt(LocalDateTime.now());
         }
-        return usuarioMapper.toDomain(usuarioRepository.save(usuarioEntity));
+        usuario = usuarioMapper.toDomain(usuarioRepository.save(usuarioEntity)).delete(usuario.isActived());
+        usuario.update(usuario.getNome(), usuario.getUsername(), usuario.getEmail(), addressDomain, usuario.getNumero());
+        return usuario;
+
     }
 
     @Override
     public Pagination<Usuario> findAll(Page page) {
-        var withPage = Pageable.ofSize(page.page()).withPage(page.number());
+        var withPage = Pageable.ofSize(page.page()).withPage(page.number()-1);
         var pageResult = usuarioRepository.findAll(withPage);
 
         return  new Pagination<>(
@@ -83,8 +101,15 @@ public class UsuarioImplRepository implements UsuarioRepository {
                 pageResult.getTotalPages(),
                 pageResult.getContent()
                         .stream()
-                        .map(usuarioMapper::toDomain)
-                        .toList()
+                        .filter(UsuarioEntity::isActived)
+                        .map(usuarioEntity -> {
+                                var address = addressRepository.findByCEP(usuarioEntity.getCEP());
+                                var usuario = usuarioMapper.toDomain(usuarioEntity);
+                            usuario.update(usuario.getNome(), usuario.getUsername(), usuario.getEmail(), addressMapper.toDomain(address), usuario.getNumero());
+                                return usuario;
+                            }
+                        )
+                        .collect(Collectors.toList())
         );
     }
 

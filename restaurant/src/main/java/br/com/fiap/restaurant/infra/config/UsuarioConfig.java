@@ -1,9 +1,6 @@
 package br.com.fiap.restaurant.infra.config;
 
-import br.com.fiap.restaurant.application.domain.usuario.Address;
-import br.com.fiap.restaurant.application.domain.usuario.DefaultUsuarioFactory;
-import br.com.fiap.restaurant.application.domain.usuario.Role;
-import br.com.fiap.restaurant.application.domain.usuario.UsuarioFactory;
+import br.com.fiap.restaurant.application.domain.usuario.*;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuario;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioInput;
@@ -57,13 +54,18 @@ public class UsuarioConfig {
     }
 
     @Bean
-    IUsuarioMapper iUsuarioMapper (UsuarioFactory factory){
-        return new UsuarioMapper(factory);
+    IUsuarioMapper iUsuarioMapper (UsuarioFactory usuarioFactory, AddressFactory addressFactory){
+        return new UsuarioMapper(usuarioFactory, addressFactory);
     }
 
     @Bean
     UsuarioFactory usuarioFactory(){
         return new DefaultUsuarioFactory();
+    }
+
+    @Bean
+    AddressFactory addressFactory() {
+        return new DefaultAddressFactory();
     }
 
     @Bean

@@ -43,7 +43,7 @@ public class UsuarioService implements UsuarioPorts {
     @Override
     public UpdateUsuarioOutput updateUsuario(UpdateUsuarioInput input) {
         var usuario = repository.findByUsername(input.username());
-        usuario.update(input.nome(), input.email(), input.endereco(), input.numero(), input.actived());
+        usuario.update(input.nome(), input.username(), input.email(), input.endereco(), input.numero());
         repository.update(usuario);
         return UpdateUsuarioOutput.from(usuario);
     }

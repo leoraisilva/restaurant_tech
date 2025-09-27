@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping(name = "/api/v1/usuario")
+@RequestMapping("/api/v1/usuario")
 @CrossOrigin("*")
 public class UsuarioController {
 
@@ -42,6 +42,11 @@ public class UsuarioController {
         this.updateUsuario = updateUsuario;
     }
 
+    @PostMapping("/")
+    public ResponseEntity<Usuario> createUsuario(@RequestBody CreateDTO createDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUsuarioOutput.to(createUsuario.createUsuario(createDTO.to(createDTO))));
+    }
+
     @GetMapping("/number/{number}/page/{page}")
     public ResponseEntity<Pagination<Usuario>> listaUsuario (@PathVariable(value = "number") int number, @PathVariable(value = "page") int page) {
         Pagination<Usuario> usuarios = listUsuario
@@ -51,7 +56,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarios);
     }
 
-    @PostMapping("/{username}")
+    @GetMapping("/{username}")
     public ResponseEntity<Usuario> getUsuario(@PathVariable(value = "username") String username) {
         return ResponseEntity.status(HttpStatus.OK).body(GetUsuarioOutput.to(getUsuario.getUsuario(username)));
     }
@@ -59,11 +64,6 @@ public class UsuarioController {
     @DeleteMapping("/{username}")
     public ResponseEntity<Usuario> deleteUsuario(@PathVariable(value = "username") String username){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(DeleteUsuarioOutput.to(deleteUsuario.deleteUsuario(username)));
-    }
-
-    @PostMapping("/")
-    public ResponseEntity<Usuario> createUsuario(@RequestBody CreateDTO createDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUsuarioOutput.to(createUsuario.createUsuario(createDTO.to(createDTO))));
     }
 
     @PutMapping("/{username}")

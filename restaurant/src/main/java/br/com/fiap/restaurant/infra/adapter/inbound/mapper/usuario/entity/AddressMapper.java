@@ -11,7 +11,6 @@ public class AddressMapper implements IAddressMapper {
     @Override
     public AddressEntity toEntity(Address address) {
         return new AddressEntity(
-                UUID.randomUUID().toString(),
                 address.CEP(),
                 address.logradouro(),
                 address.bairro(),

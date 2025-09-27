@@ -5,26 +5,24 @@ import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateU
 
 import java.util.Objects;
 
-public record UpdateDTO(String nome, String username, String senha, String email, Address endereco, Integer numero, boolean actived) {
+public record UpdateDTO(String nome, String username, String email, Address endereco, Integer numero) {
     public UpdateDTO {
-        Objects.requireNonNull(nome);
-        Objects.requireNonNull(username);
-        Objects.requireNonNull(email);
-        Objects.requireNonNull(endereco.CEP());
-        if (email.matches("^^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")){
-            throw new IllegalArgumentException("E-mail Invalido");
-        }
+        Objects.requireNonNull(nome, "Nome Obrigatorio");
+        if(nome.trim().isEmpty())
+            throw new IllegalArgumentException("Nome Obrigatorio");
+        Objects.requireNonNull(email, "E-mail Obrigatorio");
+        if(email.trim().isEmpty())
+            throw new IllegalArgumentException("E-mail Obrigatorio");
+        Objects.requireNonNull(endereco.CEP(), "CEP Obrigatorio");
     }
 
     public UpdateUsuarioInput to(UpdateDTO updateDTO){
         return new UpdateUsuarioInput(
                 updateDTO.nome(),
                 updateDTO.username(),
-                updateDTO.senha(),
                 updateDTO.email(),
                 updateDTO.endereco(),
-                updateDTO.numero(),
-                updateDTO.actived()
+                updateDTO.numero()
         );
     }
 }
