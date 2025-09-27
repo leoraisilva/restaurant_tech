@@ -3,6 +3,7 @@ package br.com.fiap.restaurant.application.services;
 import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;
 import br.com.fiap.restaurant.application.domain.usuario.*;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuario;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioInput;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioOutput;
@@ -16,10 +17,12 @@ import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateU
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuarioInput;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuarioOutput;
 import br.com.fiap.restaurant.application.gateway.outbound.usuario.UsuarioRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-public class UsuarioService implements CreateUsuario, UpdateUsuario, GetUsuario, DeleteUsuario, ListUsuario {
+public class UsuarioService implements UsuarioPorts {
 
     final private UsuarioRepository repository;
     final private UsuarioFactory factory;
@@ -32,15 +35,15 @@ public class UsuarioService implements CreateUsuario, UpdateUsuario, GetUsuario,
 
     @Override
     public CreateUsuarioOutput createUsuario(CreateUsuarioInput usuarioInput) {
-        var input = factory.newUsuario(usuarioInput.nome(), usuarioInput.usuario(), usuarioInput.senha(), usuarioInput.email(), usuarioInput.regras(), usuarioInput.endereco());
+        var input = factory.newUsuario(usuarioInput.nome(), usuarioInput.username(), usuarioInput.senha(), usuarioInput.email(), usuarioInput.regras(), usuarioInput.endereco(), usuarioInput.numero());
         var usuario = repository.create(input);
         return CreateUsuarioOutput.from(usuario);
     }
 
     @Override
     public UpdateUsuarioOutput updateUsuario(UpdateUsuarioInput input) {
-        var usuario = repository.findByUsername(input.usuario());
-        usuario.update(input.nome(), input.email(), input.endereco(),input.actived());
+        var usuario = repository.findByUsername(input.username());
+        usuario.update(input.nome(), input.email(), input.endereco(), input.numero(), input.actived());
         repository.update(usuario);
         return UpdateUsuarioOutput.from(usuario);
     }

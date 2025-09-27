@@ -8,40 +8,29 @@ public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String idEndereco;
-    @Column(name = "cep", unique = true, nullable = false)
-    private String cep;
+    @Column(name = "CEP", unique = true, nullable = false)
+    private String CEP;
     @Column(name = "logradouro")
     private String logradouro;
     @Column(name = "bairro")
     private String bairro;
     @Column(name = "cidade")
     private String cidade;
-    @Column(name = "numero")
-    private int numero;
 
-    public AddressEntity(String idEndereco, String cep, String logradouro, String bairro, String cidade, int numero) {
+    public AddressEntity(String idEndereco, String CEP, String logradouro, String bairro, String cidade) {
         this.idEndereco = idEndereco;
-        this.cep = cep;
+        this.CEP = CEP;
         this.logradouro = logradouro;
         this.bairro = bairro;
         this.cidade = cidade;
-        this.numero = numero;
     }
 
-    public String getIdEndereco() {
-        return idEndereco;
+    public String getCEP() {
+        return CEP;
     }
 
-    public void setIdEndereco(String idEndereco) {
-        this.idEndereco = idEndereco;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setCEP(String CEP) {
+        this.CEP = CEP;
     }
 
     public String getLogradouro() {
@@ -68,11 +57,4 @@ public class AddressEntity {
         this.cidade = cidade;
     }
 
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
 }

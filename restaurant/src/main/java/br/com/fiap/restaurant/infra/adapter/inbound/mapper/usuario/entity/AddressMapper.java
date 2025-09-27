@@ -6,26 +6,26 @@ import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.
 import java.util.UUID;
 
 public class AddressMapper implements IAddressMapper {
+
+    public AddressMapper () {}
     @Override
     public AddressEntity toEntity(Address address) {
         return new AddressEntity(
                 UUID.randomUUID().toString(),
-                address.cep(),
+                address.CEP(),
                 address.logradouro(),
                 address.bairro(),
-                address.cidade(),
-                address.numero()
+                address.cidade()
         );
     }
 
     @Override
     public Address toDomain(AddressEntity entity) {
         return new Address(
-                entity.getCep(),
+                entity.getCEP(),
                 entity.getLogradouro(),
                 entity.getBairro(),
-                entity.getCidade(),
-                entity.getNumero()
+                entity.getCidade()
         );
     }
 }

@@ -4,18 +4,19 @@ import java.time.LocalDateTime;
 
 public class Usuario {
     private String nome;
-    private String usuario;
+    private String username;
     private String senha;
     private String email;
     private Role regras;
     private Address endereco;
+    private Integer numero;
     private boolean actived;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
     private Usuario (UsuarioBuilder builder) {
         this.nome = builder.nome;
-        this.usuario = builder.usuario;
+        this.username = builder.username;
         this.senha = builder.senha;
         this.email = builder.email;
         this.regras = builder.regras;
@@ -23,14 +24,15 @@ public class Usuario {
         this.actived = builder.actived;
         this.createdAt = builder.createdAt;
         this.modifiedAt = builder.modifiedAt;
+        this.numero = builder.numero;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUsername() {
+        return username;
     }
 
     public String getSenha() {
@@ -48,6 +50,9 @@ public class Usuario {
     public Address getEndereco() {
         return endereco;
     }
+    public Integer getNumero() {
+        return numero;
+    }
 
     public boolean isActived() {
         return actived;
@@ -61,12 +66,13 @@ public class Usuario {
         return modifiedAt;
     }
 
-    public Usuario update(String nome, String email, Address endereco, boolean actived){
+    public Usuario update(String nome, String email, Address endereco, Integer numero, boolean actived){
         if(!actived)
             return this;
         this.nome = nome;
         this.email = email;
         this.endereco = endereco;
+        this.numero = numero;
         this.modifiedAt = LocalDateTime.now();
         return this;
     }
@@ -88,11 +94,12 @@ public class Usuario {
 
     public static class UsuarioBuilder {
         private String nome;
-        private String usuario;
+        private String username;
         private String senha;
         private String email;
         private Role regras;
         private Address endereco;
+        private Integer numero;
         private boolean actived;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
@@ -102,8 +109,8 @@ public class Usuario {
             return this;
         }
 
-        public UsuarioBuilder withUsuario(String usuario) {
-            this.usuario = usuario;
+        public UsuarioBuilder withUsuario(String username) {
+            this.username = username;
             return this;
         }
 
@@ -124,6 +131,11 @@ public class Usuario {
 
         public UsuarioBuilder withEndereco(Address endereco) {
             this.endereco = endereco;
+            return this;
+        }
+
+        public UsuarioBuilder withNumero(Integer numero) {
+            this.numero = numero;
             return this;
         }
 

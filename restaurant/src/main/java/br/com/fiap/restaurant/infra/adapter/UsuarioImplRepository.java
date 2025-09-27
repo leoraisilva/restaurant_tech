@@ -11,18 +11,18 @@ import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.AddressJPARepository;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.UsuarioJPARepository;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-@Service
+@Repository
 public class UsuarioImplRepository implements UsuarioRepository {
 
     private final UsuarioJPARepository usuarioRepository;
     private final AddressJPARepository addressRepository;
     private final IUsuarioMapper usuarioMapper;
     private final IAddressMapper addressMapper;
-
 
     public UsuarioImplRepository(UsuarioJPARepository usuarioRepository, AddressJPARepository addressRepository, IUsuarioMapper usuarioMapper,IAddressMapper addressMapper) {
         this.usuarioRepository = usuarioRepository;
@@ -33,8 +33,8 @@ public class UsuarioImplRepository implements UsuarioRepository {
 
     @Override
     public Usuario create(Usuario usuario) {
-        AddressEntity address = findByCEP(usuario.getEndereco().cep());
-        if(address.getCep().isEmpty())
+        AddressEntity address = findByCEP(usuario.getEndereco().CEP());
+        if(address.getCEP().isEmpty())
             addressRepository.save(addressMapper.toEntity(usuario.getEndereco()));
         UsuarioEntity usuarioEntity = usuarioMapper.toEntity(usuario);
         usuarioRepository.save(usuarioEntity);
@@ -48,23 +48,23 @@ public class UsuarioImplRepository implements UsuarioRepository {
 
     @Override
     public Usuario update(Usuario usuario) {
-        var usuarioEntity =  usuarioRepository.findByUsername(usuario.getUsuario());
-        AddressEntity address = findByCEP(usuario.getEndereco().cep());
-        if(address.getCep().isEmpty())
+        var usuarioEntity =  usuarioRepository.findByUsername(usuario.getUsername());
+        AddressEntity address = findByCEP(usuario.getEndereco().CEP());
+        if(address.getCEP().isEmpty())
             addressRepository.save(addressMapper.toEntity(usuario.getEndereco()));
         if(usuarioEntity.isActived()){
-            usuarioEntity.setIdUsuario(usuario.getUsuario());
+            usuarioEntity.setIdUsuario(usuario.getUsername());
             usuarioEntity.setNome(usuario.getNome());
             usuarioEntity.setRegras(usuario.getRegras());
             usuarioEntity.setModifiedAt(LocalDateTime.now());
-            usuarioEntity.setIdEndereco(address.getIdEndereco());
+            usuarioEntity.setCep(address.getCEP());
         }
         return usuarioMapper.toDomain(usuarioRepository.save(usuarioEntity));
     }
 
     @Override
     public Usuario delete(Usuario usuario) {
-        var usuarioEntity =  usuarioRepository.findByUsername(usuario.getUsuario());
+        var usuarioEntity =  usuarioRepository.findByUsername(usuario.getUsername());
         if(usuarioEntity.isActived()){
             usuarioEntity.setActived(false);
             usuarioEntity.setModifiedAt(LocalDateTime.now());
@@ -88,7 +88,7 @@ public class UsuarioImplRepository implements UsuarioRepository {
         );
     }
 
-    private AddressEntity findByCEP(String cep) {
-        return addressRepository.findByCEP(cep);
+    private AddressEntity findByCEP(String CEP) {
+        return addressRepository.findByCEP(CEP);
     }
 }

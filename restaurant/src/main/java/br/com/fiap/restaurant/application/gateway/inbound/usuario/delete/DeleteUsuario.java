@@ -1,5 +1,16 @@
 package br.com.fiap.restaurant.application.gateway.inbound.usuario.delete;
 
-public interface DeleteUsuario {
-    DeleteUsuarioOutput deleteUsuario(String username);
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
+
+public class DeleteUsuario {
+    private final UsuarioPorts usuarioPorts;
+
+    public DeleteUsuario(UsuarioPorts usuarioPorts) {
+        this.usuarioPorts = usuarioPorts;
+    }
+
+    public DeleteUsuarioOutput deleteUsuario(String username) {
+        return usuarioPorts.deleteUsuario(username);
+    }
+
 }

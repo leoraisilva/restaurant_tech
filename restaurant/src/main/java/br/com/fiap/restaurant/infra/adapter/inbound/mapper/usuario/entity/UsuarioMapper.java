@@ -12,28 +12,25 @@ import java.util.UUID;
 
 public class UsuarioMapper implements IUsuarioMapper {
     private final UsuarioFactory factory;
-    private final AddressEntity addressEntity;
-    private final Address address;
 
     public UsuarioMapper(UsuarioFactory factory, Address address, AddressEntity addressEntity) {
         this.factory = factory;
-        this.address = address;
-        this.addressEntity = addressEntity;
     }
+
+    public UsuarioMapper(UsuarioFactory factory) {
+        this.factory = factory;
+    }
+
 
     public Usuario toDomain(UsuarioEntity entity) {
         return factory.newUsuario(
                 entity.getNome(),
-                entity.getUsuario(),
+                entity.getUsername(),
                 entity.getSenha(),
                 entity.getEmail(),
                 entity.getRegras(),
-                entity.getIdEndereco().equals(addressEntity.getIdEndereco()) ? new Address(
-                        addressEntity.getCep(),
-                        addressEntity.getLogradouro(),
-                        addressEntity.getBairro(),
-                        addressEntity.getCidade(),
-                        addressEntity.getNumero()) : null
+                null,
+                entity.getNumero()
         );
     }
 
@@ -41,11 +38,12 @@ public class UsuarioMapper implements IUsuarioMapper {
         return new UsuarioEntity(
                 UUID.randomUUID().toString(),
                 usuario.getNome(),
-                usuario.getUsuario(),
+                usuario.getUsername(),
                 usuario.getSenha(),
                 usuario.getEmail(),
                 usuario.getRegras(),
-                usuario.getEndereco().cep().equals(addressEntity.getCep()) ? addressEntity.getIdEndereco() : null,
+                usuario.getEndereco().CEP(),
+                usuario.getNumero(),
                 usuario.isActived(),
                 LocalDateTime.now(),
                 LocalDateTime.now()

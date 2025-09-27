@@ -14,16 +14,18 @@ public class UsuarioEntity {
     private String idUsuario;
     @Column(name = "nome", nullable = false)
     private String nome;
-    @Column(name = "usuario", unique = true, nullable = false)
-    private String usuario;
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
     @Column(name = "senha", nullable = false)
     private String senha;
     @Column(name = "email", unique = true, nullable = false)
     private String email;
     @Column(name = "regras", nullable = false)
     private Role regras;
-    @Column(name = "id_endereco", unique = true, nullable = false)
-    private String  idEndereco;
+    @Column(name = "cep", unique = true, nullable = false)
+    private String cep;
+    @Column(name = "numero")
+    private Integer numero;
     @Column(name = "actived", nullable = false)
     private boolean actived;
     @Column(name = "created_at")
@@ -31,14 +33,15 @@ public class UsuarioEntity {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    public UsuarioEntity(String idUsuario, String nome, String usuario, String senha, String email, Role regras, String idEndereco, boolean actived, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public UsuarioEntity(String idUsuario, String nome, String username, String senha, String email, Role regras, String cep, Integer numero , boolean actived, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.idUsuario = idUsuario;
         this.nome = nome;
-        this.usuario = usuario;
+        this.username = username;
         this.senha = senha;
         this.email = email;
         this.regras = regras;
-        this.idEndereco = idEndereco;
+        this.cep = cep;
+        this.numero = numero;
         this.actived = actived;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
@@ -60,12 +63,12 @@ public class UsuarioEntity {
         this.nome = nome;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSenha() {
@@ -92,12 +95,20 @@ public class UsuarioEntity {
         this.regras = regras;
     }
 
-    public String getIdEndereco() {
-        return idEndereco;
+    public String getCep() {
+        return cep;
     }
 
-    public void setIdEndereco(String idEndereco) {
-        this.idEndereco = idEndereco;
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     public boolean isActived() {
