@@ -11,6 +11,8 @@ import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.AddressJPARepository;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.UsuarioJPARepository;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,7 @@ public class UsuarioImplRepository implements UsuarioRepository {
         if(address == null)
             addressRepository.save(addressMapper.toEntity(addressDomain));
         UsuarioEntity usuarioEntity = usuarioMapper.toEntity(usuario);
+        usuarioEntity.setSenha(passwordEncoder().encode(usuarioEntity.getSenha()));
         usuarioRepository.save(usuarioEntity);
         usuario = usuarioMapper.toDomain(usuarioEntity);
         usuario.update(usuario.getNome(), usuario.getUsername(), usuario.getEmail(), addressDomain, usuario.getNumero());
@@ -113,7 +116,23 @@ public class UsuarioImplRepository implements UsuarioRepository {
         );
     }
 
+    @Override
+    public Usuario change(Usuario usuario) {
+        var usuarioEntity =  usuarioRepository.findByUsername(usuario.getUsername());
+        var addressDomain = usuario.getEndereco();
+        if(usuarioEntity.isActived()) {
+            usuarioEntity.setSenha(passwordEncoder().encode(usuario.getSenha()));
+            usuarioEntity.setModifiedAt(LocalDateTime.now());
+        }
+        usuario = usuarioMapper.toDomain(usuarioRepository.save(usuarioEntity)).delete(usuario.isActived());
+        usuario.update(usuario.getNome(), usuario.getUsername(), usuario.getEmail(), addressDomain, usuario.getNumero());
+        return usuario;
+    }
+
     private AddressEntity findByCEP(String CEP) {
         return addressRepository.findByCEP(CEP);
+    }
+    private PasswordEncoder passwordEncoder () {
+        return new BCryptPasswordEncoder();
     }
 }

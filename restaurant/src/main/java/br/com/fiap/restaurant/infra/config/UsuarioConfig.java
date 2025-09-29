@@ -2,6 +2,7 @@ package br.com.fiap.restaurant.infra.config;
 
 import br.com.fiap.restaurant.application.domain.usuario.*;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.change.ChangeUsuario;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuario;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioInput;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.delete.DeleteUsuario;
@@ -48,6 +49,10 @@ public class UsuarioConfig {
         return new ListUsuario(usuarioPorts);
     }
 
+    @Bean
+    ChangeUsuario changeUsuario (UsuarioPorts usuarioPorts) {
+        return new ChangeUsuario(usuarioPorts);
+    }
     @Bean
     UsuarioPorts usuarioPorts(UsuarioRepository repository, UsuarioFactory factory) {
         return new UsuarioService(repository, factory);

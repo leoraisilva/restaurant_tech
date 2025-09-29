@@ -2,6 +2,9 @@ package br.com.fiap.restaurant.application.gateway.inbound.usuario;
 
 import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.change.ChangeUsuario;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.change.ChangeUsuarioInput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.change.ChangeUsuarioOutput;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuario;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioInput;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioOutput;
@@ -16,6 +19,7 @@ import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateU
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuarioOutput;
 
 public interface UsuarioPorts {
+    ChangeUsuarioOutput changeUsuario(ChangeUsuarioInput input);
     UpdateUsuarioOutput updateUsuario(UpdateUsuarioInput input);
     CreateUsuarioOutput createUsuario (CreateUsuarioInput input);
     GetUsuarioOutput getUsuario (String username);

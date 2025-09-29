@@ -4,6 +4,8 @@ import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;
 import br.com.fiap.restaurant.application.domain.usuario.*;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.change.ChangeUsuarioInput;
+import br.com.fiap.restaurant.application.gateway.inbound.usuario.change.ChangeUsuarioOutput;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuario;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioInput;
 import br.com.fiap.restaurant.application.gateway.inbound.usuario.create.CreateUsuarioOutput;
@@ -63,5 +65,12 @@ public class UsuarioService implements UsuarioPorts {
     @Override
     public Pagination<ListUsuarioOutput> listUsuario(Page page) {
         return repository.findAll(page).mapItems(ListUsuarioOutput::from);
+    }
+
+    @Override
+    public ChangeUsuarioOutput changeUsuario(ChangeUsuarioInput input) {
+        var usuario = repository.findByUsername(input.username());
+        usuario.updatePassword(input.senha());
+        return ChangeUsuarioOutput.from(repository.change(usuario));
     }
 }
