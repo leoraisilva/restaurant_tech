@@ -1,9 +1,8 @@
-package br.com.fiap.restaurant.application.gateway.inbound.usuario.list;
+package br.com.fiap.restaurant.application.useCase.inbound.usuario.list;
 
 import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.get.GetUsuarioOutput;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.UsuarioPorts;
 
 public class ListUsuario {
     private final UsuarioPorts usuarioPorts;

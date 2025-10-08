@@ -1,7 +1,7 @@
 package br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.inbound;
 
 import br.com.fiap.restaurant.application.domain.usuario.Address;
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.update.UpdateUsuarioInput;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.update.UpdateUsuarioInput;
 
 import java.util.Objects;
 

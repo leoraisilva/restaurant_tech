@@ -3,7 +3,7 @@ package br.com.fiap.restaurant.infra.adapter;
 import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;
 import br.com.fiap.restaurant.application.domain.usuario.Usuario;
-import br.com.fiap.restaurant.application.gateway.outbound.usuario.UsuarioRepository;
+import br.com.fiap.restaurant.application.useCase.outbound.usuario.UsuarioRepository;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity.IAddressMapper;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity.IUsuarioMapper;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.AddressEntity;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;

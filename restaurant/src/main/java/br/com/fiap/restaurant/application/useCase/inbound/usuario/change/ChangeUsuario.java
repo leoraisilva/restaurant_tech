@@ -1,6 +1,6 @@
-package br.com.fiap.restaurant.application.gateway.inbound.usuario.change;
+package br.com.fiap.restaurant.application.useCase.inbound.usuario.change;
 
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.UsuarioPorts;
 
 public class ChangeUsuario {
     private final UsuarioPorts usuarioPorts;

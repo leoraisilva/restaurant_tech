@@ -1,4 +1,4 @@
-package br.com.fiap.restaurant.application.gateway.inbound.usuario.update;
+package br.com.fiap.restaurant.application.useCase.inbound.usuario.update;
 
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 

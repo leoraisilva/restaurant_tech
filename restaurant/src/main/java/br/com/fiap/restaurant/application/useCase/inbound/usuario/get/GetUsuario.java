@@ -1,7 +1,6 @@
-package br.com.fiap.restaurant.application.gateway.inbound.usuario.get;
+package br.com.fiap.restaurant.application.useCase.inbound.usuario.get;
 
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.delete.DeleteUsuarioOutput;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.UsuarioPorts;
 
 public class GetUsuario {
     private final UsuarioPorts usuarioPorts;

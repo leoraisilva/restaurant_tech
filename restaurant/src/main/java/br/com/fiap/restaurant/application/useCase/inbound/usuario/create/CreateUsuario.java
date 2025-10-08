@@ -1,6 +1,6 @@
-package br.com.fiap.restaurant.application.gateway.inbound.usuario.create;
+package br.com.fiap.restaurant.application.useCase.inbound.usuario.create;
 
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.UsuarioPorts;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.UsuarioPorts;
 
 public class CreateUsuario {
     private final UsuarioPorts usuarioPorts;

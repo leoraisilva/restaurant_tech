@@ -1,9 +1,8 @@
-package br.com.fiap.restaurant.application.gateway.inbound.usuario.change;
+package br.com.fiap.restaurant.application.useCase.inbound.usuario.change;
 
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 import br.com.fiap.restaurant.application.domain.usuario.Role;
 import br.com.fiap.restaurant.application.domain.usuario.Usuario;
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.delete.DeleteUsuarioOutput;
 
 import java.time.LocalDateTime;
 

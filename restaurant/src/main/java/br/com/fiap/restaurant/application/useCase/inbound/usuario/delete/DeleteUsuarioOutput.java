@@ -1,13 +1,12 @@
-package br.com.fiap.restaurant.application.gateway.inbound.usuario.update;
+package br.com.fiap.restaurant.application.useCase.inbound.usuario.delete;
 
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 import br.com.fiap.restaurant.application.domain.usuario.Role;
 import br.com.fiap.restaurant.application.domain.usuario.Usuario;
-import br.com.fiap.restaurant.application.gateway.inbound.usuario.list.ListUsuarioOutput;
 
 import java.time.LocalDateTime;
 
-public record UpdateUsuarioOutput (String nome,
+public record DeleteUsuarioOutput (String nome,
                                    String username,
                                    String senha,
                                    String email,
@@ -17,9 +16,8 @@ public record UpdateUsuarioOutput (String nome,
                                    boolean actived,
                                    LocalDateTime createdAt,
                                    LocalDateTime modifiedAt) {
-
-    public static UpdateUsuarioOutput from(final Usuario usuario) {
-        return new UpdateUsuarioOutput(
+    public static DeleteUsuarioOutput from(final Usuario usuario) {
+        return new DeleteUsuarioOutput(
                 usuario.getNome(),
                 usuario.getUsername(),
                 usuario.getSenha(),
@@ -33,17 +31,18 @@ public record UpdateUsuarioOutput (String nome,
         );
     }
 
-    public static Usuario to(final UpdateUsuarioOutput updateUsuarioOutput) {
+    public static Usuario to(final DeleteUsuarioOutput deleteUsuarioOutput) {
         return new Usuario.UsuarioBuilder()
-                .withNome(updateUsuarioOutput.nome())
-                .withUsuario(updateUsuarioOutput.username())
-                .withSenha(updateUsuarioOutput.senha())
-                .withEmail(updateUsuarioOutput.email())
-                .withRegras(updateUsuarioOutput.regras())
-                .withEndereco(updateUsuarioOutput.endereco())
-                .withNumero(updateUsuarioOutput.numero())
-                .actived(updateUsuarioOutput.actived())
-                .withModifiedAt(updateUsuarioOutput.modifiedAt())
+                .withNome(deleteUsuarioOutput.nome())
+                .withUsuario(deleteUsuarioOutput.username())
+                .withSenha(deleteUsuarioOutput.senha())
+                .withEmail(deleteUsuarioOutput.email())
+                .withRegras(deleteUsuarioOutput.regras())
+                .withEndereco(deleteUsuarioOutput.endereco())
+                .withNumero(deleteUsuarioOutput.numero())
+                .actived(deleteUsuarioOutput.actived())
+                .withModifiedAt(deleteUsuarioOutput.modifiedAt())
                 .build();
     }
+
 }
