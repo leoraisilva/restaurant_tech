@@ -1,0 +1,576 @@
+openapi: 3.0.0
+info:
+  title: Aplicação Restaurante Tech
+  description: Na nossa região, um grupo de restaurantes decidiu contratar estudantes
+                para construir um sistema de gestão para seus estabelecimentos. Essa decisão
+                foi motivada pelo alto custo de sistemas individuais, o que levou os
+                restaurantes a se unirem para desenvolver um sistema único e compartilhado.
+                Esse sistema permitirá que os clientes escolham restaurantes com base na
+                comida oferecida, em vez de se basearem na qualidade do sistema de gestão.
+  version: 1.0.0
+servers:
+  - url: http://<hostname>/api/v1/usuario
+  
+paths:
+  /auth/login:
+    post:
+      summary: solicita acesso com usuario e senha
+      description: Este endpoint serve para ter acesso aos demais serviço.
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/change"
+      responses:
+        '200':
+          description: Sucesso retorna o token de acesso para os demais serviços.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tokens"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /create:
+    post:
+      summary: Cria um novo usuario
+      description: Este endpoint cria um usuario de acesso ao serviço.
+      operationId: createUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/create"
+      responses:
+        '200':
+          description: Sucesso retorna os dados gravado no banco com a data da criação, a data da ultima modificação, a regras com o tipo de usuario cadastrado e a senha criptografada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /search/{username}:
+    get:
+      summary: Busca um usuario
+      description: Este endpoint busca um usuario existente no serviço.
+      operationId: getUsuario
+      parameters:
+        - name: username
+          in: path
+          description: username a ser buscado
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso retorna os dados buscado no banco com a data da criação, a data da ultima modificação, a regras com o tipo de usuario registrado e a senha criptografada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
+      security:
+      - bearerAuth: []
+  /list/number/{number}/page/{page}:
+    get:
+      summary: lista os usuarios registrados
+      description: Este endpoint lista todos usuario existente no serviço.
+      operationId: listUsuario
+      parameters:
+        - name: number
+          in: path
+          description: numero de pagina dividida na busca
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: path
+          description: numero de conteudo na pagina
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Sucesso retorna os dados buscado no banco com a data da criação, a data da ultima modificação, a regras com o tipo de usuario registrado e a senha criptografada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseList"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
+      security:
+      - bearerAuth: []
+  /update/{username}:
+    put:
+      summary: Alterar um usuario
+      description: Este endpoint altera o conteudo do usuario existente no serviço.
+      operationId: updateUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/update"
+      parameters:
+        - name: username
+          in: path
+          description: username a ser alterado
+          required: true
+          schema:
+            type: string
+      
+      responses:
+        '200':
+          description: Sucesso retorna os dados alterado no banco com a data da criação, a data da ultima modificação, a regras com o tipo de usuario registrado e a senha criptografada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
+      security:
+      - bearerAuth: []
+  /delete/{username}:
+    delete:
+      summary: Desativa o usuario
+      description: Este endpoint desativa a conta do usuario existente no serviço.
+      operationId: deleteUsuario
+      parameters:
+        - name: username
+          in: path
+          description: username a ser alterado
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso retorna os dados da conta desativada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
+      security:
+      - bearerAuth: []
+  /reset:
+    put:
+      summary: Altera a senha do usuario
+      description: Este endpoint altera a senha do usuario do serviço.
+      operationId: changeUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/change"
+      responses:
+        '200':
+          description: Sucesso retorna os dados alterado no banco com a data da criação, a data da ultima modificação, a regras com o tipo de usuario cadastrado e a senha criptografada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    create:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: nome do usuario
+          example: Nome Proprio
+        username:
+          type: string
+          description: username do usuario
+          example: theUser
+        senha:
+          type: string
+          description: senha do usuario
+          example: pass123
+        email:
+          type: string
+          format: email
+          description: email do usuario
+          example: user@exemplo.com
+        regras: 
+          type: integer
+          description: representa o tipo de conta, sendo 0 dono e 1 cliente
+          example: 0
+        endereco:
+          type: object
+          properties:
+            CEP:
+              type: string
+              description: cep do endereço somente numeral
+              example: 01001000
+            logradouro:
+              type: string
+              description: endereço do presente no cep
+              example: Rua Osvaldo
+            bairro:
+              type: string
+              description: bairro do presente no cep
+              example: Sé
+            cidade:
+              type: string
+              description: cidade do presente no cep
+              example: São Paulo
+        numero:
+          type: number
+          description: numero do endereço do usuario
+          example: 25
+    update:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: nome do usuario
+          example: Nome Proprio
+        username:
+          type: string
+          description: username do usuario
+          example: theUser
+        email:
+          type: string
+          format: email
+          description: email do usuario
+          example: user@exemplo.com
+        regras: 
+          type: integer
+          description: representa o tipo de conta, sendo 0 dono e 1 cliente
+          example: 0
+        endereco:
+          type: object
+          properties:
+            CEP:
+              type: string
+              description: cep do endereço somente numeral
+              example: 01001000
+            logradouro:
+              type: string
+              description: endereço do presente no cep
+              example: Rua Osvaldo
+            bairro:
+              type: string
+              description: bairro do presente no cep
+              example: Sé
+            cidade:
+              type: string
+              description: cidade do presente no cep
+              example: São Paulo
+        numero:
+          type: number
+          description: numero do endereço do usuario
+          example: 25  
+    change:
+      type: object
+      properties:
+        username:
+          type: string
+          description: username do usuario
+          example: theUser
+        senha:
+          type: string
+          description: senha nova do usuario
+          example: pass123
+    tokens:
+      type: object
+      properties:
+        token:
+          type: string
+          format: byte
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50I
+    response:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: nome do usuario
+          example: Nome Proprio
+        username:
+          type: string
+          description: username do usuario
+          example: theUser
+        senha:
+          type: string
+          description: senha do usuario
+          example: pass123
+        email:
+          type: string
+          format: email
+          description: email do usuario
+          example: user@exemplo.com
+        regras: 
+          type: integer
+          description: representa o tipo de conta, sendo 0 dono e 1 cliente
+          example: 0
+        endereco:
+          type: object
+          properties:
+            CEP:
+              type: string
+              description: cep do endereço somente numeral
+              example: 01001000
+            logradouro:
+              type: string
+              description: endereço do presente no cep
+              example: Rua Osvaldo
+            bairro:
+              type: string
+              description: bairro do presente no cep
+              example: Sé
+            cidade:
+              type: string
+              description: cidade do presente no cep
+              example: São Paulo
+        numero:
+          type: number
+          description: numero do endereço do usuario
+          example: 25
+        actived:
+          type: boolean
+          description: indica se o usuario esta ativo ou não
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+          description: data de criação do usuario
+          example: 2025-10-11T23:26:29.0206602
+        modifiedAt:
+          type: string
+          format: date-time
+          description: data de modificação do usuario
+          example: 2025-12-11T23:26:29.0206602
+    responseList:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: numero de pagina
+          example: 1
+        page:
+          type: integer
+          description: quantidade na pagina
+          example: 1
+        total:
+          type: integer
+          description: total de pagina apresentado
+          example: 1
+        items:
+          type: array
+          description: itens buscados
+          items:
+            $ref: "#/components/schemas/response"
+            
+    Error500:
+      type: object
+      properties:
+        type:
+          type: string
+          description: informa o tipo de erro, com mensagem exceção
+          example: java.lang.NullPointerException
+        title:
+          type: string
+          description: informa o nome do erro, com mensagem status code
+          example: Internal Server Error
+        status:
+          type: number
+          description: Status Code do erro
+          example: 500
+        detail: 
+          type: string
+          description: descrição do erro
+          example: Cannot invoke  because  is null
+        instance: 
+          type: string
+          description: endpoint do erro
+          example: /api/v1/usuario
+    Error404:
+      type: object
+      properties:
+        type:
+          type: string
+          description: informa o tipo de erro, com mensagem exceção
+          example: about:blank
+        title:
+          type: string
+          description: informa o nome do erro, com mensagem status code
+          example: Not Found
+        status:
+          type: number
+          description: Status Code do erro
+          example: 404
+        detail: 
+          type: string
+          description: descrição do erro
+          example: Serviço não encontrado
+        instance: 
+          type: string
+          description: endpoint do erro
+          example: /api/v1/usuario
+    Error400:
+      type: object
+      properties:
+        type:
+          type: string
+          description: informa o tipo de erro, com mensagem exceção
+          example: org.hibernate.sql.exec.ExecutionException
+        title:
+          type: string
+          description: informa o nome do erro, com mensagem status code
+          example: Bad Request
+        status:
+          type: number
+          description: Status Code do erro
+          example: 400
+        detail: 
+          type: string
+          description: descrição do erro
+          example: Erro na requisição
+        instance: 
+          type: string
+          description: endpoint do erro
+          example: /api/v1/usuario
+        
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
