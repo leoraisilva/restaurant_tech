@@ -4,29 +4,33 @@ services:
     image: postgres
     container_name: restaurant
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: restaurant
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres-network
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
+  app:
+    container_name: restaurant-app
+    build:
+      context: ./restaurant
+      dockerfile: Dockerfile
+      args:
+        ARG_POSTGRES_ENV: ${SPRING_URL}
+    ports:
+      - "8081:8081"
     depends_on:
       - postgres
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "9000:80"
+    environment: 
+      SPRING_DATASOURCE_URL: ${SPRING_URL}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     networks:
       - postgres-network
-
+      
 networks:
   postgres-network:
     driver: bridge
