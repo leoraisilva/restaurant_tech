@@ -65,14 +65,12 @@ Java / Maven (Opcional, para rodar sem Docker ou gerar o JAR)
 
 ## Passos para Execução com Docker Compose
 
-#### 1. Passos para Execução com Docker Compose:
+#### 1. Passos salva arquivo .env na mesma pasta do arquivo compose.yml:  
+
+#### 2. Passos para Execução com Docker Compose:
 
     docker compose up --build
 
-#### 2. Gere o arquivo JAR da Aplicação:
-
-    mvn clean package
-
-#### 4. Verifique os Contêineres:
+#### 3. Verifique os Contêineres:
 
     docker ps
