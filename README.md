@@ -1,11 +1,8 @@
-
 # 🍽️ Tech Challenge: API de Gestão de Usuários
 
 ## 📜 Descrição do Projeto
 
 Este projeto consiste no desenvolvimento de um Backend completo e robusto utilizando Spring Boot para um sistema de gestão de restaurantes. Esta é a Fase 1 do sistema, focada no módulo de gestão de usuários.
-=======
-
 
 O sistema permite o gerenciamento completo de usuários, incluindo clientes e donos de restaurantes, garantindo a unicidade de e-mail e funcionalidades separadas para troca de senha e atualização de dados.
 
