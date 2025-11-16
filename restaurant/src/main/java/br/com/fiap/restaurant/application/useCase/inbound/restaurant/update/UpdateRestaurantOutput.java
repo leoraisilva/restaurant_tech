@@ -17,7 +17,7 @@ public record UpdateRestaurantOutput (
         LocalDateTime createAt,
         LocalDateTime modifiedAt
 ) {
-    public UpdateRestaurantOutput from(final Restaurant restaurant){
+    public static UpdateRestaurantOutput from(final Restaurant restaurant){
         return new UpdateRestaurantOutput(
                 restaurant.getNomeRestaurante(),
                 restaurant.getTipo(),
@@ -31,7 +31,7 @@ public record UpdateRestaurantOutput (
         );
     }
 
-    public Restaurant to(final UpdateRestaurantOutput output){
+    public static Restaurant to(final UpdateRestaurantOutput output){
         return new Restaurant.RestaurantBuilder()
                 .withNomeRestaurant(output.nomeRestaurante())
                 .withTipo(output.tipo())

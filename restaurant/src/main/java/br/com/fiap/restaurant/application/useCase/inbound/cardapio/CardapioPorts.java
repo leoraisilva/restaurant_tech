@@ -1,5 +1,7 @@
 package br.com.fiap.restaurant.application.useCase.inbound.cardapio;
 
+import br.com.fiap.restaurant.application.domain.page.Page;
+import br.com.fiap.restaurant.application.domain.pagination.Pagination;
 import br.com.fiap.restaurant.application.useCase.inbound.cardapio.create.CreateCardapioInput;
 import br.com.fiap.restaurant.application.useCase.inbound.cardapio.create.CreateCardapioOutput;
 import br.com.fiap.restaurant.application.useCase.inbound.cardapio.delete.DeleteCardapioOutput;
@@ -12,6 +14,6 @@ public interface CardapioPorts {
     CreateCardapioOutput createCardapio(CreateCardapioInput input);
     DeleteCardapioOutput deleteCardapio(String nomeProduto);
     GetCardapioOutput getCardapio (String nomeProduto);
-    ListCardapioOutput listCardapio ();
+    Pagination<ListCardapioOutput> listCardapio (Page page);
     UpdateCardapioOutput updateCardapio(UpdateCardapioInput input);
 }

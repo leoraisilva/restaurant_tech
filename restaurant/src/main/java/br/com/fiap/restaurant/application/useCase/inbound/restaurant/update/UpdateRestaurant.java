@@ -10,7 +10,7 @@ public class UpdateRestaurant {
         this.restaurantPorts = restaurantPorts;
     }
 
-    public UpdateRestaurantOutput updateRestaurant(UpdateCardapioInput input) {
+    public UpdateRestaurantOutput updateRestaurant(UpdateRestaurantInput input) {
         return this.restaurantPorts.updateRestaurant(input);
     }
 }

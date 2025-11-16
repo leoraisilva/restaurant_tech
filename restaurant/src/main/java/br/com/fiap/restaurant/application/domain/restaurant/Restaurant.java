@@ -64,6 +64,22 @@ public class Restaurant {
         return modifiedAt;
     }
 
+    public Restaurant update(String nomeRestaurante, String tipo, Address endereco, LocalDateTime abertura, LocalDateTime fechamento) {
+        this.nomeRestaurante = nomeRestaurante;
+        this.tipo = tipo;
+        this.endereco = endereco;
+        this.abertura = abertura;
+        this.fechamento = fechamento;
+        return this;
+    }
+
+    public Restaurant delete() {
+        if(!isActived())
+            return this;
+        this.actived = false;
+        return this;
+    }
+
     public static class RestaurantBuilder {
         private String nomeRestaurante;
         private String tipo;

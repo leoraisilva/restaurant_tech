@@ -11,7 +11,7 @@ public class GetRestaurant {
         this.restaurantPorts = restaurantPorts;
     }
 
-    public GetCardapioOutput getRestaurant(String nomeRestaurante) {
+    public GetRestaurantOutput getRestaurant(String nomeRestaurante) {
         return restaurantPorts.getRestaurant(nomeRestaurante);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.restaurant.application.useCase.inbound.cardapio.list;
 
+import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.useCase.inbound.cardapio.CardapioPorts;
 
 public class ListCardapio {
@@ -9,7 +10,7 @@ public class ListCardapio {
         this.cardapioPorts = cardapioPorts;
     }
 
-    public ListCardapioOutput listCardapio () {
-        return cardapioPorts.listCardapio();
+    public ListCardapioOutput listCardapio (Page page) {
+        return cardapioPorts.listCardapio(page);
     }
 }

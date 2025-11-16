@@ -63,6 +63,22 @@ public class Cardapio {
         return modifiedAt;
     }
 
+    public Cardapio update(String nomeProduto, String descricao, double preco, String imagem, boolean entrega){
+        this.nomeProduto = nomeProduto;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.imagem = imagem;
+        this.entrega = entrega;
+        return this;
+    }
+
+    public Cardapio delete() {
+        if(!isDisponivel())
+             return this;
+        this.disponivel = false;
+        return this;
+    }
+
     public static class CardapioBuilder {
         private String nomeProduto;
         private String descricao;
