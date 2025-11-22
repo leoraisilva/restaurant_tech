@@ -5,7 +5,7 @@ import br.com.fiap.restaurant.application.domain.cardapio.Cardapio;
 import java.time.LocalDateTime;
 
 public record GetCardapioOutput (
-        String nomeProduto,
+        String product,
         String descricao,
         double preco,
         String imagem,
@@ -18,7 +18,7 @@ public record GetCardapioOutput (
 
     public static GetCardapioOutput from(final Cardapio cardapio) {
         return new GetCardapioOutput(
-                cardapio.getNomeProduto(),
+                cardapio.getProduct(),
                 cardapio.getDescricao(),
                 cardapio.getPreco(),
                 cardapio.getImagem(),
@@ -32,7 +32,7 @@ public record GetCardapioOutput (
 
     public static Cardapio to(final GetCardapioOutput output){
         return new Cardapio.CardapioBuilder()
-                .withNomeProduto(output.nomeProduto())
+                .withNomeProduto(output.product())
                 .withDescricao(output.descricao())
                 .withPreco(output.preco())
                 .withImagem(output.imagem())

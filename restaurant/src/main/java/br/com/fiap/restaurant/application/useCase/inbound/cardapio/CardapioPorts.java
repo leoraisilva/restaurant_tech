@@ -12,8 +12,8 @@ import br.com.fiap.restaurant.application.useCase.inbound.cardapio.update.Update
 
 public interface CardapioPorts {
     CreateCardapioOutput createCardapio(CreateCardapioInput input);
-    DeleteCardapioOutput deleteCardapio(String nomeProduto);
-    GetCardapioOutput getCardapio (String nomeProduto);
+    DeleteCardapioOutput deleteCardapio(String product);
+    GetCardapioOutput getCardapio (String product);
     Pagination<ListCardapioOutput> listCardapio (Page page);
     UpdateCardapioOutput updateCardapio(UpdateCardapioInput input);
 }

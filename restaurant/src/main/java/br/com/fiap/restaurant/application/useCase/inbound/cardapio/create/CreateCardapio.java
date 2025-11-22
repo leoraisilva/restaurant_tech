@@ -9,7 +9,7 @@ public class CreateCardapio {
         this.cardapioPorts = cardapioPorts;
     }
 
-    CreateCardapioOutput createCardapio (CreateCardapioInput input) {
+    public CreateCardapioOutput createCardapio(CreateCardapioInput input) {
         return cardapioPorts.createCardapio(input);
     }
 }

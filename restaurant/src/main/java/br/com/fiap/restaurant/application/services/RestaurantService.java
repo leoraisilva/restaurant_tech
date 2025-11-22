@@ -30,13 +30,13 @@ public class RestaurantService implements RestaurantPorts {
 
     @Override
     public DeleteRestaurantOutput deleteRestaurant(String nomeRestaurante) {
-        var restaurant = repository.findByUsername(nomeRestaurante);
+        var restaurant = repository.findByNomeRestaurante(nomeRestaurante);
         return DeleteRestaurantOutput.from(repository.delete(restaurant));
     }
 
     @Override
     public GetRestaurantOutput getRestaurant(String nomeRestaurante) {
-        var restaurant = repository.findByUsername(nomeRestaurante);
+        var restaurant = repository.findByNomeRestaurante(nomeRestaurante);
         return GetRestaurantOutput.from(restaurant);
     }
 
@@ -47,7 +47,7 @@ public class RestaurantService implements RestaurantPorts {
 
     @Override
     public UpdateRestaurantOutput updateRestaurant(UpdateRestaurantInput input) {
-        var restaurant = repository.findByUsername(input.nomeRestaurante());
+        var restaurant = repository.findByNomeRestaurante(input.nomeRestaurante());
         restaurant.update(input.nomeRestaurante(), input.tipo(), input.endereco(), input.abertura(), input.fechamento());
         return UpdateRestaurantOutput.from(repository.update(restaurant));
     }

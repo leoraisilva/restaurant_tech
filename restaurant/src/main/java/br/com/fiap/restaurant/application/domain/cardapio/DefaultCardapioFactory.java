@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public class DefaultCardapioFactory implements CardapioFactory{
     @Override
-    public Cardapio newCardapio(String nomeProduto, String descricao, double preco, String imagem, boolean entrega, String restaurant) {
+    public Cardapio newCardapio(String product, String descricao, double preco, String imagem, boolean entrega, String restaurant) {
         return new Cardapio.CardapioBuilder()
-                .withNomeProduto(nomeProduto)
+                .withNomeProduto(product)
                 .withDescricao(descricao)
                 .withPreco(preco)
                 .withImagem(imagem)

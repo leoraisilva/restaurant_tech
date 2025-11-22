@@ -8,7 +8,7 @@ import br.com.fiap.restaurant.application.domain.pagination.Pagination;
 public interface CardapioRepository {
     Cardapio create(Cardapio cardapio);
     Cardapio update(Cardapio cardapio);
-    Cardapio findByUsername(String Username);
+    Cardapio findByProduct(String product);
     Pagination<Cardapio> findAll(Page page);
     Cardapio delete(Cardapio cardapio);
 }

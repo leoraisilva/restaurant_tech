@@ -5,7 +5,7 @@ import br.com.fiap.restaurant.application.domain.restaurant.Restaurant;
 import java.time.LocalDateTime;
 
 public class Cardapio {
-    private String nomeProduto;
+    private String product;
     private String descricao;
     private double preco;
     private String imagem;
@@ -16,7 +16,7 @@ public class Cardapio {
     private LocalDateTime modifiedAt;
 
     public Cardapio(CardapioBuilder builder){
-        this.nomeProduto = builder.nomeProduto;
+        this.product = builder.product;
         this.descricao = builder.descricao;
         this.preco = builder.preco;
         this.imagem = builder.imagem;
@@ -27,8 +27,8 @@ public class Cardapio {
         this.modifiedAt = builder.modifiedAt;
     }
 
-    public String getNomeProduto() {
-        return nomeProduto;
+    public String getProduct() {
+        return product;
     }
 
     public String getDescricao() {
@@ -63,8 +63,8 @@ public class Cardapio {
         return modifiedAt;
     }
 
-    public Cardapio update(String nomeProduto, String descricao, double preco, String imagem, boolean entrega){
-        this.nomeProduto = nomeProduto;
+    public Cardapio update(String product, String descricao, double preco, String imagem, boolean entrega){
+        this.product = product;
         this.descricao = descricao;
         this.preco = preco;
         this.imagem = imagem;
@@ -80,7 +80,7 @@ public class Cardapio {
     }
 
     public static class CardapioBuilder {
-        private String nomeProduto;
+        private String product;
         private String descricao;
         private double preco;
         private String imagem;
@@ -90,8 +90,8 @@ public class Cardapio {
         private LocalDateTime createAd;
         private LocalDateTime modifiedAt;
 
-        public CardapioBuilder withNomeProduto(String nomeProduto) {
-            this.nomeProduto = nomeProduto;
+        public CardapioBuilder withNomeProduto(String product) {
+            this.product = product;
             return this;
         }
 

@@ -10,8 +10,8 @@ public class CardapioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String cardapioId;
-    @Column(name = "nome_produto", nullable = false, unique = true)
-    private String nomeProduto;
+    @Column(name = "product", nullable = false, unique = true)
+    private String product;
     @Column(name = "descricao")
     private String descricao;
     @Column(name = "preco", nullable = false)
@@ -29,9 +29,9 @@ public class CardapioEntity {
     @Column(name = "modifiedAt")
     private LocalDateTime modifiedAt;
 
-    public CardapioEntity(String cardapioId, String nomeProduto, String descricao, double preco, String imagem, boolean entrega, String restaurant, boolean disponivel, LocalDateTime createAd, LocalDateTime modifiedAt) {
+    public CardapioEntity(String cardapioId, String product, String descricao, double preco, String imagem, boolean entrega, String restaurant, boolean disponivel, LocalDateTime createAd, LocalDateTime modifiedAt) {
         this.cardapioId = cardapioId;
-        this.nomeProduto = nomeProduto;
+        this.product = product;
         this.descricao = descricao;
         this.preco = preco;
         this.imagem = imagem;
@@ -50,12 +50,12 @@ public class CardapioEntity {
         this.cardapioId = cardapioId;
     }
 
-    public String getNomeProduto() {
-        return nomeProduto;
+    public String getProduct() {
+        return product;
     }
 
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
+    public void setProduct(String product) {
+        this.product = product;
     }
 
     public String getDescricao() {

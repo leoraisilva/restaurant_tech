@@ -15,7 +15,7 @@ public class CardapioMapper implements ICardapioMapper{
     @Override
     public Cardapio toDomain(CardapioEntity entity) {
         return factory.newCardapio(
-                entity.getNomeProduto(),
+                entity.getProduct(),
                 entity.getDescricao(),
                 entity.getPreco(),
                 entity.getImagem(),
@@ -28,7 +28,7 @@ public class CardapioMapper implements ICardapioMapper{
     public CardapioEntity toEntity(Cardapio cardapio) {
         return new CardapioEntity(
                 UUID.randomUUID().toString(),
-                cardapio.getNomeProduto(),
+                cardapio.getProduct(),
                 cardapio.getDescricao(),
                 cardapio.getPreco(),
                 cardapio.getImagem(),

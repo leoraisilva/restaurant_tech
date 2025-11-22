@@ -13,6 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres-network
+  
   app:
     container_name: restaurant-app
     build:

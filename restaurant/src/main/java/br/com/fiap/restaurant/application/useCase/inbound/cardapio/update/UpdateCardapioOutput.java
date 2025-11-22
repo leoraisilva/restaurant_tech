@@ -5,7 +5,7 @@ import br.com.fiap.restaurant.application.domain.cardapio.Cardapio;
 import java.time.LocalDateTime;
 
 public record UpdateCardapioOutput (
-        String nomeProduto,
+        String product,
         String descricao,
         double preco,
         String imagem,
@@ -18,7 +18,7 @@ public record UpdateCardapioOutput (
 
     public static UpdateCardapioOutput from(final Cardapio cardapio) {
         return new UpdateCardapioOutput(
-                cardapio.getNomeProduto(),
+                cardapio.getProduct(),
                 cardapio.getDescricao(),
                 cardapio.getPreco(),
                 cardapio.getImagem(),
@@ -32,7 +32,7 @@ public record UpdateCardapioOutput (
 
     public static Cardapio to(final UpdateCardapioOutput output){
         return new Cardapio.CardapioBuilder()
-                .withNomeProduto(output.nomeProduto())
+                .withNomeProduto(output.product())
                 .withDescricao(output.descricao())
                 .withPreco(output.preco())
                 .withImagem(output.imagem())

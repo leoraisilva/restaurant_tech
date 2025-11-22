@@ -27,18 +27,18 @@ public class CardapioService implements CardapioPorts {
 
     @Override
     public CreateCardapioOutput createCardapio(CreateCardapioInput input) {
-        return CreateCardapioOutput.from(repository.create(factory.newCardapio(input.nomeProduto(),input.descricao(), input.preco(), input.imagem(), input.entrega(),input.restaurant())));
+        return CreateCardapioOutput.from(repository.create(factory.newCardapio(input.product(),input.descricao(), input.preco(), input.imagem(), input.entrega(),input.restaurant())));
     }
 
     @Override
-    public DeleteCardapioOutput deleteCardapio(String nomeProduto) {
-        var cardapio = repository.findByUsername(nomeProduto);
+    public DeleteCardapioOutput deleteCardapio(String product) {
+        var cardapio = repository.findByProduct(product);
         return DeleteCardapioOutput.from(repository.delete(cardapio));
     }
 
     @Override
-    public GetCardapioOutput getCardapio(String nomeProduto) {
-        var cardapio = repository.findByUsername(nomeProduto);
+    public GetCardapioOutput getCardapio(String product) {
+        var cardapio = repository.findByProduct(product);
         return GetCardapioOutput.from(cardapio);
     }
 
@@ -49,8 +49,8 @@ public class CardapioService implements CardapioPorts {
 
     @Override
     public UpdateCardapioOutput updateCardapio(UpdateCardapioInput input) {
-        var cardapio = repository.findByUsername(input.nomeProduto());
-        cardapio.update(input.nomeProduto(), input.descricao(), input.preco(), input.imagem(), input.entrega());
+        var cardapio = repository.findByProduct(input.product());
+        cardapio.update(input.product(), input.descricao(), input.preco(), input.imagem(), input.entrega());
         return UpdateCardapioOutput.from(repository.update(cardapio));
     }
 }

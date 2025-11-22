@@ -9,7 +9,7 @@ public class GetCardapio {
         this.cardapioPorts = cardapioPorts;
     }
 
-    public GetCardapioOutput getCardapio (String nomeProduto) {
-        return cardapioPorts.getCardapio(nomeProduto);
+    public GetCardapioOutput getCardapio (String product) {
+        return cardapioPorts.getCardapio(product);
     }
 }

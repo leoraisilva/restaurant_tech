@@ -9,7 +9,7 @@ public class DeleteCardapio {
         this.cardapioPorts = cardapioPorts;
     }
 
-    public DeleteCardapioOutput deleteCardapio (String nomeProduto) {
-        return cardapioPorts.deleteCardapio(nomeProduto);
+    public DeleteCardapioOutput deleteCardapio (String product) {
+        return cardapioPorts.deleteCardapio(product);
     }
 }
