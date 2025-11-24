@@ -31,7 +31,6 @@ public class RestaurantMapper implements IRestaurantMapper{
     @Override
     public RestaurantEntity toEntity(Restaurant restaurant) {
         return new RestaurantEntity(
-                UUID.randomUUID().toString(),
                 restaurant.getNomeRestaurante(),
                 restaurant.getTipo(),
                 restaurant.getEndereco().CEP(),

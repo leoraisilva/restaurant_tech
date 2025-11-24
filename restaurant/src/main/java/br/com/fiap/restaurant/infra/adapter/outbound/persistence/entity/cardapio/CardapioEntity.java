@@ -29,8 +29,7 @@ public class CardapioEntity {
     @Column(name = "modifiedAt")
     private LocalDateTime modifiedAt;
 
-    public CardapioEntity(String cardapioId, String product, String descricao, double preco, String imagem, boolean entrega, String restaurant, boolean disponivel, LocalDateTime createAd, LocalDateTime modifiedAt) {
-        this.cardapioId = cardapioId;
+    public CardapioEntity(String product, String descricao, double preco, String imagem, boolean entrega, String restaurant, boolean disponivel, LocalDateTime createAd, LocalDateTime modifiedAt) {
         this.product = product;
         this.descricao = descricao;
         this.preco = preco;

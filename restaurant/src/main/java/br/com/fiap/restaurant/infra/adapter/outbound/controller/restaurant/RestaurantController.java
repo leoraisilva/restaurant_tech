@@ -60,7 +60,7 @@ public class RestaurantController {
         );
     }
 
-    @DeleteMapping("/delete/nomeRestaurante")
+    @DeleteMapping("/delete/{nomeRestaurante}")
     public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable(value = "nomeRestaurante") String nomeRestaurante) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(DeleteRestaurantOutput.to(deleteRestaurant.deleteRestaurant(nomeRestaurante)));
     }

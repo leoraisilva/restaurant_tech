@@ -30,8 +30,7 @@ public class RestaurantEntity {
     @Column(name = "modifiedAt")
     private LocalDateTime modifiedAt;
 
-    public RestaurantEntity(String restaurantId, String nomeRestaurante, String tipo, String CEP, LocalDateTime abertura, LocalDateTime fechamento, String responsavel, boolean actived, LocalDateTime createAt, LocalDateTime modifiedAt) {
-        this.restaurantId = restaurantId;
+    public RestaurantEntity(String nomeRestaurante, String tipo, String CEP, LocalDateTime abertura, LocalDateTime fechamento, String responsavel, boolean actived, LocalDateTime createAt, LocalDateTime modifiedAt) {
         this.nomeRestaurante = nomeRestaurante;
         this.tipo = tipo;
         this.CEP = CEP;

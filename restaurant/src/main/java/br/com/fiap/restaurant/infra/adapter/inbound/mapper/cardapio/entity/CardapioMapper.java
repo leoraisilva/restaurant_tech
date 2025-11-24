@@ -27,7 +27,6 @@ public class CardapioMapper implements ICardapioMapper{
     @Override
     public CardapioEntity toEntity(Cardapio cardapio) {
         return new CardapioEntity(
-                UUID.randomUUID().toString(),
                 cardapio.getProduct(),
                 cardapio.getDescricao(),
                 cardapio.getPreco(),

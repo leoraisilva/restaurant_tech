@@ -47,9 +47,9 @@ public class CardapioController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(UpdateCardapioOutput.to(updateCardapio.updateCardapio(UpdateDTO.from(updateDTO))));
     }
 
-    @GetMapping("/search/{nomeProduto}")
-    public ResponseEntity<Cardapio> getCardapio(@PathVariable (value = "nomeProduto") String nomeProduto) {
-        return ResponseEntity.status(HttpStatus.OK).body(GetCardapioOutput.to(getCardapio.getCardapio(nomeProduto)));
+    @GetMapping("/search/{product}")
+    public ResponseEntity<Cardapio> getCardapio(@PathVariable (value = "nomeProduto") String product) {
+        return ResponseEntity.status(HttpStatus.OK).body(GetCardapioOutput.to(getCardapio.getCardapio(product)));
     }
 
     @GetMapping("/list/number/{number}/page/{page}")
@@ -60,9 +60,9 @@ public class CardapioController {
         );
     }
 
-    @DeleteMapping("/delete/{nomeProduto}")
-    public ResponseEntity<Cardapio> deleteCardapio (@PathVariable (value = "nomeProduto") String nomeProduto) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(DeleteCardapioOutput.to(deleteCardapio.deleteCardapio(nomeProduto)));
+    @DeleteMapping("/delete/{product}")
+    public ResponseEntity<Cardapio> deleteCardapio (@PathVariable (value = "product") String product) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(DeleteCardapioOutput.to(deleteCardapio.deleteCardapio(product)));
     }
 
 }
