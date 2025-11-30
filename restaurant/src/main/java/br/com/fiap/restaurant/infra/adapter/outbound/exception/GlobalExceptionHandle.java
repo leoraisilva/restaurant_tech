@@ -1,5 +1,6 @@
 package br.com.fiap.restaurant.infra.adapter.outbound.exception;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.hibernate.sql.exec.ExecutionException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,18 @@ import java.sql.SQLException;
 public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ChangeSetPersister.NotFoundException.class})
     protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
+        var response = new ResponseException(
+                ChangeSetPersister.NotFoundException.class.getTypeName(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage(),
+                HttpHeaders.SERVER
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    protected ResponseEntity<Object> handleIllegalArgument(RuntimeException e, WebRequest request) {
         var response = new ResponseException(
                 ChangeSetPersister.NotFoundException.class.getTypeName(),
                 HttpStatus.NOT_FOUND.getReasonPhrase(),

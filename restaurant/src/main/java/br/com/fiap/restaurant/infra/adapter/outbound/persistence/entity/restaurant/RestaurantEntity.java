@@ -42,6 +42,8 @@ public class RestaurantEntity {
         this.modifiedAt = modifiedAt;
     }
 
+    public RestaurantEntity () {}
+
     public String getRestaurantId() {
         return restaurantId;
     }

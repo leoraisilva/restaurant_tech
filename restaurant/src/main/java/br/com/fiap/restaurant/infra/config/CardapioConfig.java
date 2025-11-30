@@ -10,6 +10,7 @@ import br.com.fiap.restaurant.application.useCase.inbound.cardapio.get.GetCardap
 import br.com.fiap.restaurant.application.useCase.inbound.cardapio.list.ListCardapio;
 import br.com.fiap.restaurant.application.useCase.inbound.cardapio.update.UpdateCardapio;
 import br.com.fiap.restaurant.application.useCase.outbound.cardapio.CardapioRepository;
+import br.com.fiap.restaurant.application.useCase.outbound.restaurant.RestaurantRepository;
 import br.com.fiap.restaurant.infra.adapter.CardapioImplRepository;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.cardapio.entity.CardapioMapper;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.cardapio.entity.ICardapioMapper;
@@ -40,8 +41,8 @@ public class CardapioConfig {
         return new GetCardapio(cardapioPorts);
     }
     @Bean
-    CardapioPorts cardapioService(CardapioFactory factory, CardapioRepository cardapioRepository) {
-        return new CardapioService(factory, cardapioRepository);
+    CardapioPorts cardapioService(CardapioFactory factory, RestaurantRepository restaurantRepository, CardapioRepository cardapioRepository) {
+        return new CardapioService(factory, restaurantRepository, cardapioRepository);
     }
     @Bean
     CardapioFactory cardapioFactory () {

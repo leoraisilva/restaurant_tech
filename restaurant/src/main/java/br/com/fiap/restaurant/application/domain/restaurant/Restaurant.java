@@ -80,6 +80,13 @@ public class Restaurant {
         return this;
     }
 
+    public Restaurant updateOwner (String responsavel) {
+        if(!isActived())
+            return this;
+        this.responsavel = responsavel;
+        return this;
+    }
+
     public static class RestaurantBuilder {
         private String nomeRestaurante;
         private String tipo;

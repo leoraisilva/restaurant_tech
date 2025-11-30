@@ -11,12 +11,14 @@ import br.com.fiap.restaurant.application.useCase.inbound.restaurant.get.GetRest
 import br.com.fiap.restaurant.application.useCase.inbound.restaurant.list.ListRestaurant;
 import br.com.fiap.restaurant.application.useCase.inbound.restaurant.update.UpdateRestaurant;
 import br.com.fiap.restaurant.application.useCase.outbound.restaurant.RestaurantRepository;
+import br.com.fiap.restaurant.application.useCase.outbound.usuario.UsuarioRepository;
 import br.com.fiap.restaurant.infra.adapter.RestaurantImplRepository;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.restaurant.entity.IRestaurantMapper;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.restaurant.entity.RestaurantMapper;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity.IAddressMapper;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.restaurant.RestaurantJPARepository;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.AddressJPARepository;
+import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.UsuarioJPARepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -44,8 +46,8 @@ public class RestaurantConfig {
         return new UpdateRestaurant(restaurantPorts);
     }
     @Bean
-    RestaurantPorts restaurantPorts(RestaurantRepository restaurantRepository, RestaurantFactory restaurantFactory) {
-        return new RestaurantService(restaurantRepository, restaurantFactory);
+    RestaurantPorts restaurantPorts(RestaurantRepository restaurantRepository, RestaurantFactory restaurantFactory, UsuarioRepository repository) {
+        return new RestaurantService(restaurantRepository, restaurantFactory, repository);
     }
     @Bean
     RestaurantRepository restaurantRepository(RestaurantJPARepository restaurantRepository, AddressJPARepository addressRepository, IRestaurantMapper restaurantMapper, IAddressMapper addressMapper) {

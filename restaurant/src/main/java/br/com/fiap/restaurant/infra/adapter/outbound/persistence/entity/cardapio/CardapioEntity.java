@@ -41,6 +41,8 @@ public class CardapioEntity {
         this.modifiedAt = modifiedAt;
     }
 
+    public CardapioEntity () {}
+
     public String getCardapioId() {
         return cardapioId;
     }
