@@ -3,11 +3,14 @@ package br.com.fiap.restaurant.application.domain.restaurant;
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class DefaultRestaurantFactory implements RestaurantFactory{
 
     @Override
     public Restaurant newRestaurant(String nomeRestaurante, String tipo, Address endereco, LocalDateTime abertura, LocalDateTime fechamento, String responsavel) {
+        Objects.requireNonNull(nomeRestaurante, "Nome do Restaurante Obrigatório");
+
         if(verifyResponsibility(responsavel)) {
             return new Restaurant.RestaurantBuilder()
                     .withNomeRestaurant(nomeRestaurante)

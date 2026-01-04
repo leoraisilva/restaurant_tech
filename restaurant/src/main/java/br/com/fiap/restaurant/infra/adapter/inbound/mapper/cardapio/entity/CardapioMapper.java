@@ -34,7 +34,7 @@ public class CardapioMapper implements ICardapioMapper{
                 cardapio.isEntrega(),
                 cardapio.getRestaurant(),
                 cardapio.isDisponivel(),
-                cardapio.getCreateAd(),
+                cardapio.getCreatedAt(),
                 cardapio.getModifiedAt()
         );
     }

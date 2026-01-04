@@ -1,10 +1,12 @@
 package br.com.fiap.restaurant.application.domain.cardapio;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class DefaultCardapioFactory implements CardapioFactory{
     @Override
     public Cardapio newCardapio(String product, String descricao, double preco, String imagem, boolean entrega, String restaurant) {
+        Objects.requireNonNull(product, "Produto Obrigatorio");
         if(verifyRestaurant(restaurant)) {
             return new Cardapio.CardapioBuilder()
                     .withNomeProduto(product)

@@ -12,7 +12,7 @@ public record DeleteCardapioOutput (
         boolean entrega,
         String restaurant,
         boolean disponivel,
-        LocalDateTime createAd,
+        LocalDateTime createdAt,
         LocalDateTime modifiedAt
 ) {
     public static DeleteCardapioOutput from(final Cardapio cardapio) {
@@ -24,7 +24,7 @@ public record DeleteCardapioOutput (
                 cardapio.isEntrega(),
                 cardapio.getRestaurant(),
                 cardapio.isDisponivel(),
-                cardapio.getCreateAd(),
+                cardapio.getCreatedAt(),
                 cardapio.getModifiedAt()
         );
     }
@@ -39,7 +39,7 @@ public record DeleteCardapioOutput (
                 .withRestaurant(output.restaurant())
                 .withEntrega(output.entrega())
                 .withDisponivel(output.disponivel())
-                .withCreateAt(output.createAd())
+                .withCreateAt(output.createdAt())
                 .withModifiedAt(output.modifiedAt())
                 .build();
     }

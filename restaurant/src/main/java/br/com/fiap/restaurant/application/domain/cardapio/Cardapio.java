@@ -12,7 +12,7 @@ public class Cardapio {
     private boolean entrega;
     private String restaurant;
     private boolean disponivel;
-    private LocalDateTime createAd;
+    private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
     public Cardapio(CardapioBuilder builder){
@@ -23,7 +23,7 @@ public class Cardapio {
         this.entrega = builder.entrega;
         this.restaurant = builder.restaurant;
         this.disponivel = builder.disponivel;
-        this.createAd = builder.createAd;
+        this.createdAt = builder.createdAt;
         this.modifiedAt = builder.modifiedAt;
     }
 
@@ -55,8 +55,8 @@ public class Cardapio {
         return disponivel;
     }
 
-    public LocalDateTime getCreateAd() {
-        return createAd;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public LocalDateTime getModifiedAt() {
@@ -87,7 +87,7 @@ public class Cardapio {
         private boolean entrega;
         private String restaurant;
         private boolean disponivel;
-        private LocalDateTime createAd;
+        private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
         public CardapioBuilder withNomeProduto(String product) {
@@ -125,8 +125,8 @@ public class Cardapio {
             return this;
         }
 
-        public CardapioBuilder withCreateAt(LocalDateTime createAd) {
-            this.createAd = createAd;
+        public CardapioBuilder withCreateAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
             return this;
         }
 

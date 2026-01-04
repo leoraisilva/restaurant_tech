@@ -11,7 +11,7 @@ import br.com.fiap.restaurant.application.useCase.inbound.cardapio.list.ListCard
 import br.com.fiap.restaurant.application.useCase.inbound.cardapio.update.UpdateCardapio;
 import br.com.fiap.restaurant.application.useCase.outbound.cardapio.CardapioRepository;
 import br.com.fiap.restaurant.application.useCase.outbound.restaurant.RestaurantRepository;
-import br.com.fiap.restaurant.infra.adapter.CardapioImplRepository;
+import br.com.fiap.restaurant.infra.adapter.gateway.CardapioImplRepository;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.cardapio.entity.CardapioMapper;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.cardapio.entity.ICardapioMapper;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.cardapio.CardapioJPARespository;
