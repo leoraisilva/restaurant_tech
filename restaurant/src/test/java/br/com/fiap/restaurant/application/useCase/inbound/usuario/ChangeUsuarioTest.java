@@ -1,17 +1,14 @@
 package br.com.fiap.restaurant.application.useCase.inbound.usuario;
 
-import br.com.fiap.restaurant.application.domain.cardapio.Cardapio;
 import br.com.fiap.restaurant.application.domain.usuario.Address;
 import br.com.fiap.restaurant.application.domain.usuario.Role;
 import br.com.fiap.restaurant.application.domain.usuario.Usuario;
-import br.com.fiap.restaurant.application.useCase.inbound.cardapio.CardapioPorts;
-import br.com.fiap.restaurant.application.useCase.inbound.cardapio.list.ListCardapioOutput;
-import br.com.fiap.restaurant.application.useCase.inbound.restaurant.update.UpdateRestaurantInput;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.change.ChangeUsuario;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.change.ChangeUsuarioInput;
+import br.com.fiap.restaurant.application.useCase.inbound.usuario.change.ChangeUsuarioOutput;
 import br.com.fiap.restaurant.application.useCase.inbound.usuario.create.CreateUsuarioInput;
 import br.com.fiap.restaurant.application.useCase.inbound.usuario.create.CreateUsuarioOutput;
-import br.com.fiap.restaurant.application.useCase.inbound.usuario.update.UpdateUsuario;
 import br.com.fiap.restaurant.application.useCase.inbound.usuario.update.UpdateUsuarioInput;
-import br.com.fiap.restaurant.application.useCase.inbound.usuario.update.UpdateUsuarioOutput;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,36 +19,28 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ExtendWith(MockitoExtension.class)
-public class UpdateUsuarioTest {
+public class ChangeUsuarioTest {
     @Mock
     private UsuarioPorts usuarioPorts;
 
     @InjectMocks
-    private UpdateUsuario updateUsuario;
+    private ChangeUsuario changeUsuario;
 
     @Test
-    void deveCriarUpdateUsuarioInput () {
-        Address endereco = new Address(
-                "87654321",
-                "Rua B",
-                "Bairro B",
-                "Rio de Janeiro"
-        );
+    void deveCriarChangeUsuarioInput () {
 
-        var input = new UpdateUsuarioInput("Joao", "jsilva", "jsilva@exemplo.com",  endereco, 15);
+        var input = new ChangeUsuarioInput("jsilva", "j123456");
 
         assertNotNull(input);
-        assertEquals("Joao", input.nome() );
         assertEquals("jsilva", input.username());
-        assertEquals("jsilva@exemplo.com", input.email());
-        assertEquals(endereco, input.endereco());
-        assertEquals(15, input.numero());
+        assertEquals("j123456", input.senha());
     }
 
     @Test
-    void deveCriarUpdateUsuarioOutputAPartirDeUsuario() {
+    void deveCriarChangeUsuarioOutputAPartirDeUsuario() {
         Address endereco = new Address(
                 "87654321",
                 "Rua B",
@@ -73,7 +62,7 @@ public class UpdateUsuarioTest {
                 .withNumero(15)
                 .build();
 
-        UpdateUsuarioOutput result = UpdateUsuarioOutput.from(output);
+        ChangeUsuarioOutput result = ChangeUsuarioOutput.from(output);
 
         assertNotNull(result);
         assertEquals("Joao", result.nome() );
@@ -89,7 +78,7 @@ public class UpdateUsuarioTest {
     }
 
     @Test
-    void deveCriarUsuarioAPartirDeUpdateUsuarioOutput() {
+    void deveCriarUsuarioAPartirDeChangeUsuarioOutput() {
         Address endereco = new Address(
                 "87654321",
                 "Rua B",
@@ -98,7 +87,7 @@ public class UpdateUsuarioTest {
         );
         var now = LocalDateTime.now();
 
-        UpdateUsuarioOutput output = new UpdateUsuarioOutput(
+        ChangeUsuarioOutput output = new ChangeUsuarioOutput(
                 "Joao",
                 "jsilva",
                 "j123456",
@@ -111,7 +100,7 @@ public class UpdateUsuarioTest {
                 now
         );
 
-        Usuario result = UpdateUsuarioOutput.to(output);
+        Usuario result = ChangeUsuarioOutput.to(output);
 
         assertNotNull(result);
         assertEquals("Joao", result.getNome() );
@@ -124,7 +113,7 @@ public class UpdateUsuarioTest {
     }
 
     @Test
-    void deveDelegarCriacaoParaUpdateUsuarioPorts() {
+    void deveDelegarCriacaoParaCreateUsuarioPorts() {
         Address endereco = new Address(
                 "87654321",
                 "Rua B",
@@ -133,10 +122,10 @@ public class UpdateUsuarioTest {
         );
 
         var now = LocalDateTime.now();
-        var input = new UpdateUsuarioInput("Joao", "jsilva", "j123456", endereco, 15);
+        var input = new ChangeUsuarioInput("jsilva", "j123456");
 
 
-        UpdateUsuarioOutput output = new UpdateUsuarioOutput(
+        ChangeUsuarioOutput output = new ChangeUsuarioOutput(
                 "Joao",
                 "jsilva",
                 "j123456",
@@ -149,17 +138,16 @@ public class UpdateUsuarioTest {
                 now
         );
 
-        when(usuarioPorts.updateUsuario(input))
+        when(usuarioPorts.changeUsuario(input))
                 .thenReturn(output);
 
-        UpdateUsuarioOutput resultado =
-                updateUsuario.updateUsuario(input);
+        ChangeUsuarioOutput resultado =
+                changeUsuario.changeUsuario(input);
 
         assertEquals(output, resultado);
 
         verify(usuarioPorts, times(1))
-                .updateUsuario(input);
+                .changeUsuario(input);
         verifyNoMoreInteractions(usuarioPorts);
     }
-
 }

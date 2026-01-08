@@ -60,7 +60,7 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
                 ExecutionException.class.getTypeName(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 HttpStatus.BAD_REQUEST.value(),
-                e.getMessage(),
+                "Request Not Accept",
                 request.getDescription(true).split(";")[0].replace("uri=", "")
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
