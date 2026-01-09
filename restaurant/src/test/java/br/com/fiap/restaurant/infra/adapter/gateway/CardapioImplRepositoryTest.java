@@ -65,30 +65,27 @@ class CardapioImplRepositoryTest {
 
     @Test
     void deveAtualizarCardapioQuandoDisponivel() {
-        when(cardapio.getProduct()).thenReturn(PRODUTO_NOME);
-        when(repository.findByProduct(PRODUTO_NOME)).thenReturn(cardapioEntity);
+        cardapio = mock(Cardapio.class);
+
+        cardapioEntity = new CardapioEntity();
+        cardapioEntity.setProduct("Pizza");
+        cardapioEntity.setDescricao("Pizza Calabresa");
+        cardapioEntity.setPreco(50.0);
+        cardapioEntity.setDisponivel(true);
+
+        when(cardapio.getProduct()).thenReturn("Pizza");
+        when(cardapio.getDescricao()).thenReturn("Nova descrição");
+        when(cardapio.getPreco()).thenReturn(60.0);
+        when(cardapio.getImagem()).thenReturn("img.png");
+        when(cardapio.isEntrega()).thenReturn(true);
+
+        when(repository.findByProduct("Pizza")).thenReturn(cardapioEntity);
         when(mapper.toDomain(cardapioEntity)).thenReturn(cardapio);
-        when(cardapio.isDisponivel()).thenReturn(true);
 
-        when(mapper.toEntity(cardapio)).thenReturn(cardapioEntity);
+        Cardapio result = cardapioRepository.update(cardapio);
 
-        var result = cardapioRepository.update(cardapio);
-
-        assertNotNull(result);
         verify(repository).save(cardapioEntity);
-    }
-
-    @Test
-    void naoDeveAtualizarCardapioQuandoIndisponivel() {
-        when(cardapio.getProduct()).thenReturn(PRODUTO_NOME);
-        when(repository.findByProduct(PRODUTO_NOME)).thenReturn(cardapioEntity);
-        when(mapper.toDomain(cardapioEntity)).thenReturn(cardapio);
-        when(cardapio.isDisponivel()).thenReturn(false);
-
-        var result = cardapioRepository.update(cardapio);
-
-        assertNotNull(result);
-        verify(repository, never()).save(any());
+        assertEquals(cardapio, result);
     }
 
     @Test
@@ -128,18 +125,24 @@ class CardapioImplRepositoryTest {
     }
 
     @Test
-    void deveExcluirCardapioQuandoDisponivel() {
-        when(cardapio.getProduct()).thenReturn(PRODUTO_NOME);
-        when(repository.findByProduct(PRODUTO_NOME)).thenReturn(cardapioEntity);
+    void deveMarcarCardapioComoIndisponivel() {
+        cardapio = mock(Cardapio.class);
+
+        cardapioEntity = new CardapioEntity();
+        cardapioEntity.setProduct("Pizza");
+        cardapioEntity.setDescricao("Pizza Calabresa");
+        cardapioEntity.setPreco(50.0);
+        cardapioEntity.setDisponivel(true);
+
+        when(cardapio.getProduct()).thenReturn("Pizza");
+        when(repository.findByProduct("Pizza")).thenReturn(cardapioEntity);
         when(mapper.toDomain(cardapioEntity)).thenReturn(cardapio);
-        when(cardapio.isDisponivel()).thenReturn(true);
 
-        when(mapper.toEntity(cardapio)).thenReturn(cardapioEntity);
+        Cardapio result = cardapioRepository.delete(cardapio);
 
-        var result = cardapioRepository.delete(cardapio);
-
-        assertNotNull(result);
-        verify(cardapio).delete();
+        assertFalse(cardapioEntity.isDisponivel());
         verify(repository).save(cardapioEntity);
+        assertEquals(cardapio, result);
     }
+
 }

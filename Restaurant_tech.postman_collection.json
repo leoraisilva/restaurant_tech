@@ -1,0 +1,880 @@
+{
+	"info": {
+		"_postman_id": "225342a4-9118-4b85-8682-249054164b78",
+		"name": "Restaurant_tech",
+		"description": "⚙️ Visão Geral  \nO arquivo Restaurant_tech.postman_collection.json é uma coleção de testes de API.  \nEle organiza endpoints da API REST de usuários em um fluxo que simula a jornada completa de uso:\n\n1. Cria um usuário\n    \n2. Faz login com ele\n    \n3. Executa operações válidas (GET, LIST, UPDATE, CHANGE, DELETE)\n    \n4. Executa testes de erro (404, 400, 500)\n    \n\nEsse tipo de fluxo é típico de um teste de integração funcional, onde se valida o comportamento do sistema do início ao fim.\n\nStartFragment\n\n## 🧭 🔁 Fluxo de Execução no Postman (passo a passo)\n\n1. **Execute “CreateUsuario”** → Cria o usuário.\n    \n2. **Execute “login”** → Gera e salva o token JWT.\n    \n3. **Vá para a pasta “200” e execute, nessa ordem:**\n    \n    1. Há necessidade adicionar o Token gerado no passo 2 em Authorization Bearer Token:\n        \n        1. GetUsuario\n            \n        2. ListUsuario\n            \n        3. UpdateUsuario\n            \n        4. ChangeUsuario\n            \n        5. DeleteUsuario\n            \n4. **Vá para a pasta “404”** e execute `erro404`\n    \n5. **Vá para a pasta “400”** e execute `erro400`\n    \n6. **Vá para a pasta “500”** e execute `erro500`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32979420"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "CreateUsuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nome\": \"Luiz de Camoes\",\n    \"username\": \"lcamoes\",\n    \"senha\": \"senha123\",\n    \"email\": \"lcamoes@exemplo.com\",\n    \"regras\": 0,\n    \"endereco\": {\n        \"CEP\": \"13216500\",\n        \"logradouro\": \"Rua Pernambuco\",\n        \"bairro\": \"Jd. Taruma\",\n        \"cidade\": \"Jundiai\"\n    },\n    \"numero\": 332\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"create"
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"lcamoes\",\r\n    \"senha\": \"senha123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "200",
+					"item": [
+						{
+							"name": "GetUsuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/search/lcamoes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"search",
+										"lcamoes"
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ListUsuario",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/list/number/1/page/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"list",
+										"number",
+										"1",
+										"page",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateUsuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n            \"nome\": \"Douglas Campos\",\n            \"email\": \"dcampos@exemplo.com\",\n            \"username\": \"dcampos\",\n            \"regras\": \"CLIENT\",\n            \"endereco\": {\n                \"CEP\": \"01310100\",\n                \"logradouro\": \"Avenida Paulista\",\n                \"bairro\": \"Bela Vista\",\n                \"cidade\": \"São Paulo\"\n            },\n            \"numero\": 23\n        }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/update/dcampos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"update",
+										"dcampos"
+									]
+								},
+								"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteUsuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/delete/lcamoes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"delete",
+										"lcamoes"
+									]
+								},
+								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "ChangeUsuario",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"lcamoes\",\r\n    \"senha\": \"senhaCriada\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/reset",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"reset"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "404",
+					"item": [
+						{
+							"name": "erro404",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/searc/lcamoes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"searc",
+										"lcamoes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "400",
+					"item": [
+						{
+							"name": "erro400",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nome\": \"Luiz de Camoes\",\n    \"username\": \"lcamoes\",\n    \"senha\": \"senha123\",\n    \"email\": \"\",\n    \"regras\": 0,\n    \"endereco\": {\n        \"CEP\": \"13216500\",\n        \"logradouro\": \"Rua Pernambuco\",\n        \"bairro\": \"Jd. Taruma\",\n        \"cidade\": \"Jundiai\"\n    },\n    \"numero\": 332\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "500",
+					"item": [
+						{
+							"name": "erro500",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzg2Mzg3Mn0.gsYMvGzlLfUqoeo2nIYQBQn8XeZ3lN-DPDfIGrvexbE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/usuario/search/lcamos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"usuario",
+										"search",
+										"lcamos"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "200",
+					"item": [
+						{
+							"name": "CreateRestaurant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoiZGNhbXBvcyIsImV4cCI6MTc2Mzk3Mjg0M30.A54ahPgv0q2N9Rhu9AEG8sOuo1XvQLad1I5zhDTDR0I",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nomeRestaurante\":\"Gulosema\",\r\n    \"tipo\":\"Doces\",\r\n    \"endereco\":{\r\n        \"CEP\": \"01310100\",\r\n        \"logradouro\": \"Avenida Paulista\",\r\n        \"bairro\": \"Bela Vista\",\r\n        \"cidade\": \"São Paulo\"\r\n    },\r\n    \"abertura\":\"2025-11-23T20:10:00\",\r\n    \"fechamento\":\"2025-11-23T20:18:43\",\r\n    \"responsavel\":\"dcampos\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/restaurant/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"restaurant",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListRestaurant",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk1MjQ3Mn0.ZSc7amAkPTclJismEAqSC8AOTxSw_gXPMraRyMS6m0o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/restaurant/list/number/1/page/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"restaurant",
+										"list",
+										"number",
+										"1",
+										"page",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetRestaurant",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/restaurant/search/Mamma",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"restaurant",
+										"search",
+										"Mamma"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateRestaurant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nomeRestaurante\":\"Mamma\",\r\n    \"tipo\":\"Doces\",\r\n    \"endereco\":{\r\n        \"CEP\": \"13216540\",\r\n        \"logradouro\": \"Avenida Paulista\",\r\n        \"bairro\": \"Bela Vista\",\r\n        \"cidade\": \"São Paulo\"\r\n    },\r\n    \"abertura\":\"2025-11-23T20:12:00\",\r\n    \"fechamento\":\"2025-11-23T20:19:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/restaurant/update/Mamma",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"restaurant",
+										"update",
+										"Mamma"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteRestaurant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk1NjM3MX0.SwBRyeSQVYgtJVbxTwHzOV-nmhRZt9PjaAVfaanL64w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/restaurant/delete/Mamma",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"restaurant",
+										"delete",
+										"Mamma"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cardapio",
+			"item": [
+				{
+					"name": "200",
+					"item": [
+						{
+							"name": "CreateCardapio",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk1MzQ3NH0.H8xM_X2uACvF-tA2ieIrkjiWlrCRmZZe8Uhn-3bFWu8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product\":\"Chocotone\",\r\n    \"descricao\":\"Pao doce de chocolate\",\r\n    \"preco\":49.00,\r\n    \"imagem\":\".jpg\",\r\n    \"entrega\":true,\r\n    \"restaurant\":\"Gulosema\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/cardapio/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"cardapio",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListCardapio",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/cardapio/list/number/1/page/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"cardapio",
+										"list",
+										"number",
+										"1",
+										"page",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCardapio",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/cardapio/search/Chocotone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"cardapio",
+										"search",
+										"Chocotone"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateCardapio",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product\":\"feijoada\",\r\n    \"descricao\":\"prato montado com feijoads, farova e picanha\",\r\n    \"preco\":25.00,\r\n    \"imagem\":\"\",\r\n    \"entrega\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/cardapio/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"cardapio",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCardapio",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50Iiwic3ViIjoibGNhbW9lcyIsImV4cCI6MTc2Nzk0NzU0Mn0.UXCVywWtoVMjwBS0FEWSG8xL9xPi790K00Ies_e26SM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/cardapio/delete/Chocotone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"cardapio",
+										"delete",
+										"Chocotone"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://template.postman-echo.com"
+		}
+	]
+}

@@ -18,6 +18,7 @@ import br.com.fiap.restaurant.infra.adapter.inbound.mapper.restaurant.entity.Res
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity.IAddressMapper;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.restaurant.RestaurantJPARepository;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.AddressJPARepository;
+import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.UsuarioJPARepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -49,8 +50,8 @@ public class RestaurantConfig {
         return new RestaurantService(restaurantRepository, restaurantFactory, repository);
     }
     @Bean
-    RestaurantRepository restaurantRepository(RestaurantJPARepository restaurantRepository, AddressJPARepository addressRepository, IRestaurantMapper restaurantMapper, IAddressMapper addressMapper) {
-        return new RestaurantImplRepository(restaurantRepository, addressRepository, restaurantMapper, addressMapper);
+    RestaurantRepository restaurantRepository(RestaurantJPARepository restaurantRepository, AddressJPARepository addressRepository, IRestaurantMapper restaurantMapper, UsuarioJPARepository usuarioRepository, IAddressMapper addressMapper) {
+        return new RestaurantImplRepository(restaurantRepository, addressRepository, usuarioRepository, restaurantMapper, addressMapper);
     }
     @Bean
     RestaurantFactory restaurantFactory() {

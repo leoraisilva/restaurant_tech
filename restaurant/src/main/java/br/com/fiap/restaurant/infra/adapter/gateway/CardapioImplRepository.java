@@ -33,12 +33,14 @@ public class CardapioImplRepository implements CardapioRepository {
     @Override
     public Cardapio update(Cardapio cardapio) {
         var cardapioEntity = respository.findByProduct(cardapio.getProduct());
-        var cardapioDomain = mapper.toDomain(cardapioEntity);
-        if (cardapioDomain.isDisponivel()){
-            cardapioDomain.update(cardapio.getProduct(), cardapio.getDescricao(), cardapio.getPreco(), cardapio.getImagem(), cardapio.isEntrega());
-            respository.save(mapper.toEntity(cardapioDomain));
+        if (cardapioEntity.isDisponivel()){
+            cardapioEntity.setDescricao(cardapio.getDescricao());
+            cardapioEntity.setPreco(cardapio.getPreco());
+            cardapioEntity.setImagem(cardapio.getImagem());
+            cardapioEntity.setEntrega(cardapio.isEntrega());
+            respository.save(cardapioEntity);
         }
-        return cardapioDomain;
+        return mapper.toDomain(cardapioEntity);
     }
 
     @Override
@@ -68,11 +70,10 @@ public class CardapioImplRepository implements CardapioRepository {
     @Override
     public Cardapio delete(Cardapio cardapio) {
         var cardapioEntity = respository.findByProduct(cardapio.getProduct());
-        var cardapioDomain = mapper.toDomain(cardapioEntity);
-        if (cardapioDomain.isDisponivel()){
-            cardapioDomain.delete();
-            respository.save(mapper.toEntity(cardapioDomain));
+        if (cardapioEntity.isDisponivel()){
+            cardapioEntity.setDisponivel(false);
+            respository.save(cardapioEntity);
         }
-        return cardapioDomain;
+        return mapper.toDomain(cardapioEntity);
     }
 }

@@ -4,12 +4,15 @@ import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;
 import br.com.fiap.restaurant.application.domain.restaurant.Restaurant;
 import br.com.fiap.restaurant.application.domain.usuario.Address;
+import br.com.fiap.restaurant.application.domain.usuario.Role;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.restaurant.entity.IRestaurantMapper;
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity.IAddressMapper;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.restaurant.RestaurantEntity;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.AddressEntity;
+import br.com.fiap.restaurant.infra.adapter.outbound.persistence.entity.usuario.UsuarioEntity;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.restaurant.RestaurantJPARepository;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.AddressJPARepository;
+import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.UsuarioJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,11 +33,15 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class RestaurantImplRepositoryTest {
 
+
     @Mock
     private RestaurantJPARepository restaurantRepository;
 
     @Mock
     private AddressJPARepository addressRepository;
+
+    @Mock
+    private UsuarioJPARepository usuarioRepository;
 
     @Mock
     private IRestaurantMapper restaurantMapper;
@@ -45,87 +52,133 @@ public class RestaurantImplRepositoryTest {
     @InjectMocks
     private RestaurantImplRepository repository;
 
-    @Mock
     private Restaurant restaurant;
-
-    @Mock
     private RestaurantEntity restaurantEntity;
-
-    @Mock
-    private Address address;
-
-    @Mock
     private AddressEntity addressEntity;
-
-    private final String NOME_REST = "Rest A";
-    private final String CEP = "12345-000";
+    private UsuarioEntity usuarioEntity;
 
     @BeforeEach
     void setup() {
-        // Mocks já inicializados pelo MockitoExtension
+        restaurant = mock(Restaurant.class);
+
+        restaurantEntity = new RestaurantEntity();
+        restaurantEntity.setNomeRestaurante("Restaurante A");
+        restaurantEntity.setTipo("Japonesa");
+        restaurantEntity.setCEP("12345000");
+        restaurantEntity.setAbertura(LocalDateTime.of(5, 2,4, 10, 0));
+        restaurantEntity.setFechamento(LocalDateTime.of(5, 2,4, 22, 0));
+        restaurantEntity.setActived(true);
+
+        addressEntity = new AddressEntity();
+        addressEntity.setCEP("12345-000");
+
+        usuarioEntity = new UsuarioEntity();
+        usuarioEntity.setRegras(Role.OWNER);
     }
 
     @Test
-    void deveCriarRestauranteComEnderecoNovo() {
-        // Arrange
-        when(restaurant.getEndereco()).thenReturn(address);
-        when(address.CEP()).thenReturn(CEP);
-        when(addressRepository.findByCEP(CEP)).thenReturn(null);
+    void deveCriarRestauranteComSucesso() {
+        when(restaurant.getResponsavel()).thenReturn("admin");
+        when(usuarioRepository.findByUsername("admin")).thenReturn(usuarioEntity);
 
-        // Configurar mappers para não retornarem null
-        when(addressMapper.toEntity(address)).thenReturn(addressEntity);
+        var endereco = mock(br.com.fiap.restaurant.application.domain.usuario.Address.class);
+        when(restaurant.getEndereco()).thenReturn(endereco);
+        when(endereco.CEP()).thenReturn("12345-000");
+
+        when(addressRepository.findByCEP("12345-000")).thenReturn(addressEntity);
         when(restaurantMapper.toEntity(restaurant)).thenReturn(restaurantEntity);
         when(restaurantMapper.toDomain(restaurantEntity)).thenReturn(restaurant);
+        when(addressMapper.toDomain(addressEntity)).thenReturn(endereco);
 
-        // Act
-        repository.create(restaurant);
+        Restaurant result = repository.create(restaurant);
 
-        // Assert
-        verify(addressRepository).save(addressEntity);
         verify(restaurantRepository).save(restaurantEntity);
+        assertNotNull(result);
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoUsuarioForCliente() {
+        usuarioEntity.setRegras(Role.CLIENT);
+        when(restaurant.getResponsavel()).thenReturn("cliente");
+        when(usuarioRepository.findByUsername("cliente")).thenReturn(usuarioEntity);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> repository.create(restaurant));
     }
 
     @Test
     void deveAtualizarRestauranteAtivo() {
-        // Arrange
-        when(restaurant.getNomeRestaurante()).thenReturn(NOME_REST);
-        when(restaurant.getEndereco()).thenReturn(address);
-        when(address.CEP()).thenReturn(CEP);
-        when(restaurantRepository.findByNomeRestaurante(NOME_REST)).thenReturn(restaurantEntity);
-        when(addressRepository.findByCEP(CEP)).thenReturn(addressEntity);
+        when(restaurant.getNomeRestaurante()).thenReturn("Restaurante A");
+        when(restaurant.getTipo()).thenReturn("Italiana");
+        when(restaurant.getAbertura()).thenReturn(LocalDateTime.of(5, 2,4, 10, 0));
+        when(restaurant.getFechamento()).thenReturn(LocalDateTime.of(5, 2,4, 22, 0));
 
-        when(restaurantEntity.isActived()).thenReturn(true);
+        var endereco = mock(br.com.fiap.restaurant.application.domain.usuario.Address.class);
+        when(restaurant.getEndereco()).thenReturn(endereco);
+        when(endereco.CEP()).thenReturn("12345-000");
+
+        when(restaurantRepository.findByNomeRestaurante("Restaurante A"))
+                .thenReturn(restaurantEntity);
+        when(addressRepository.findByCEP("12345-000")).thenReturn(addressEntity);
         when(restaurantMapper.toDomain(restaurantEntity)).thenReturn(restaurant);
-        when(restaurantMapper.toEntity(restaurant)).thenReturn(restaurantEntity);
+        when(addressMapper.toDomain(addressEntity)).thenReturn(endereco);
 
-        // Act
-        repository.update(restaurant);
+        Restaurant result = repository.update(restaurant);
 
-        // Assert
         verify(restaurantRepository).save(restaurantEntity);
+        assertNotNull(result);
     }
 
     @Test
-    void deveExcluirRestauranteAtivo() {
-        // Arrange
-        when(restaurant.getNomeRestaurante()).thenReturn(NOME_REST);
-        when(restaurant.getEndereco()).thenReturn(address);
-        when(address.CEP()).thenReturn(CEP);
-        when(restaurantRepository.findByNomeRestaurante(NOME_REST)).thenReturn(restaurantEntity);
-
+    void deveBuscarRestauranteAtivo() {
+        when(restaurantRepository.findByNomeRestaurante("Restaurante A"))
+                .thenReturn(restaurantEntity);
+        when(addressRepository.findByCEP("12345000")).thenReturn(addressEntity);
         when(restaurantMapper.toDomain(restaurantEntity)).thenReturn(restaurant);
-        when(restaurant.isActived()).thenReturn(true);
+        when(addressMapper.toDomain(addressEntity))
+                .thenReturn(mock(br.com.fiap.restaurant.application.domain.usuario.Address.class));
 
-        // Importante: configurar o mapper para o save não receber null
-        when(restaurantMapper.toEntity(restaurant)).thenReturn(restaurantEntity);
-        when(addressRepository.findByCEP(CEP)).thenReturn(addressEntity);
-        when(addressMapper.toDomain(addressEntity)).thenReturn(address);
+        Restaurant result = repository.findByNomeRestaurante("Restaurante A");
 
-        // Act
-        repository.delete(restaurant);
-
-        // Assert
-        verify(restaurant).delete();
-        verify(restaurantRepository).save(restaurantEntity);
+        assertNotNull(result);
     }
+
+    @Test
+    void deveRetornarApenasRestaurantesAtivos() {
+        Page page = new Page(1, 10);
+
+        when(restaurantRepository.findAll(any(Pageable.class)))
+                .thenReturn(new PageImpl<>(List.of(restaurantEntity)));
+
+        when(addressRepository.findByCEP("12345000")).thenReturn(addressEntity);
+        when(restaurantMapper.toDomain(restaurantEntity)).thenReturn(restaurant);
+        when(addressMapper.toDomain(addressEntity))
+                .thenReturn(mock(br.com.fiap.restaurant.application.domain.usuario.Address.class));
+
+        Pagination<Restaurant> result = repository.findAll(page);
+
+        assertEquals(1, result.getItems().size());
+    }
+
+    @Test
+    void deveDesativarRestaurante() {
+        when(restaurant.getNomeRestaurante()).thenReturn("Restaurante A");
+        when(restaurant.getEndereco())
+                .thenReturn(mock(br.com.fiap.restaurant.application.domain.usuario.Address.class));
+        when(restaurant.getEndereco().CEP()).thenReturn("12345000");
+
+        when(restaurantRepository.findByNomeRestaurante("Restaurante A"))
+                .thenReturn(restaurantEntity);
+        when(addressRepository.findByCEP("12345000")).thenReturn(addressEntity);
+        when(restaurantMapper.toDomain(restaurantEntity)).thenReturn(restaurant);
+        when(addressMapper.toDomain(addressEntity))
+                .thenReturn(mock(br.com.fiap.restaurant.application.domain.usuario.Address.class));
+
+        Restaurant result = repository.delete(restaurant);
+
+        assertFalse(restaurantEntity.isActived());
+        verify(restaurantRepository).save(restaurantEntity);
+        assertNotNull(result);
+    }
+
 }

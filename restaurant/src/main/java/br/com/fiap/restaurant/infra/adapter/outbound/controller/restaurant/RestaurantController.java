@@ -42,8 +42,8 @@ public class RestaurantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateRestaurantOutput.to(createRestaurant.createRestaurant(CreateDTO.from(createDTO))));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Restaurant> updateRestaurant(@RequestBody UpdateDTO updateDTO) {
+    @PutMapping("/update/{nomeRestaurante}")
+    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable (value = "nomeRestaurante") String nomeRestaurante, @RequestBody UpdateDTO updateDTO) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(UpdateRestaurantOutput.to(updateRestaurant.updateRestaurant(UpdateDTO.from(updateDTO))));
     }
 

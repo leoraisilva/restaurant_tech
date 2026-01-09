@@ -42,13 +42,13 @@ public class CardapioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateCardapioOutput.to(createCardapio.createCardapio(CreateDTO.from(createDTO))));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Cardapio> updateCardapio(@RequestBody UpdateDTO updateDTO) {
+    @PutMapping("/update/{product}")
+    public ResponseEntity<Cardapio> updateCardapio(@PathVariable (value = "product") String product, @RequestBody UpdateDTO updateDTO) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(UpdateCardapioOutput.to(updateCardapio.updateCardapio(UpdateDTO.from(updateDTO))));
     }
 
     @GetMapping("/search/{product}")
-    public ResponseEntity<Cardapio> getCardapio(@PathVariable (value = "nomeProduto") String product) {
+    public ResponseEntity<Cardapio> getCardapio(@PathVariable (value = "product") String product) {
         return ResponseEntity.status(HttpStatus.OK).body(GetCardapioOutput.to(getCardapio.getCardapio(product)));
     }
 

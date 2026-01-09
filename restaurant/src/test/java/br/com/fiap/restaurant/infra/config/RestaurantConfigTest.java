@@ -14,6 +14,7 @@ import br.com.fiap.restaurant.infra.adapter.inbound.mapper.restaurant.entity.IRe
 import br.com.fiap.restaurant.infra.adapter.inbound.mapper.usuario.entity.IAddressMapper;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.restaurant.RestaurantJPARepository;
 import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.AddressJPARepository;
+import br.com.fiap.restaurant.infra.adapter.outbound.persistence.repository.usuario.UsuarioJPARepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class RestaurantConfigTest {
 
     @MockBean
     AddressJPARepository addressJPARepository;
+
+    @MockBean
+    UsuarioJPARepository usuarioJPARepository;
 
     @MockBean
     UsuarioRepository usuarioRepository;

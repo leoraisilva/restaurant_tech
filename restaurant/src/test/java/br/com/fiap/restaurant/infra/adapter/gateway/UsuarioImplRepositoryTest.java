@@ -126,7 +126,6 @@ public class UsuarioImplRepositoryTest {
         verify(usuarioRepository).save(usuarioEntity);
     }
 
-
     @Test
     void deveListarSomenteUsuariosAtivos() {
         var page = new Page(1, 10);

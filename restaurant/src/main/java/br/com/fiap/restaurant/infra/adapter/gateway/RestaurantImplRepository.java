@@ -19,18 +19,24 @@ public class RestaurantImplRepository implements RestaurantRepository {
 
     private final RestaurantJPARepository restaurantRepository;
     private final AddressJPARepository addressRepository;
+    private final UsuarioJPARepository usuarioRepository;
     private final IRestaurantMapper restaurantMapper;
     private final IAddressMapper addressMapper;
 
-    public RestaurantImplRepository(RestaurantJPARepository restaurantRepository, AddressJPARepository addressRepository, IRestaurantMapper restaurantMapper, IAddressMapper addressMapper) {
+    public RestaurantImplRepository(RestaurantJPARepository restaurantRepository, AddressJPARepository addressRepository, UsuarioJPARepository usuarioRepository, IRestaurantMapper restaurantMapper, IAddressMapper addressMapper) {
         this.restaurantRepository = restaurantRepository;
         this.addressRepository = addressRepository;
+        this.usuarioRepository = usuarioRepository;
         this.restaurantMapper = restaurantMapper;
         this.addressMapper = addressMapper;
+
     }
 
     @Override
     public Restaurant create(Restaurant restaurant) {
+        var responsability = usuarioRepository.findByUsername(restaurant.getResponsavel());
+        if(responsability == null || responsability.getRegras().equals(Role.CLIENT))
+            throw new IllegalArgumentException("Usuario não pode Criar Restaurant");
         var enderecoRequest = restaurant.getEndereco();
         var enderecoBD = addressRepository.findByCEP(enderecoRequest.CEP());
         if(enderecoBD == null)
@@ -49,17 +55,13 @@ public class RestaurantImplRepository implements RestaurantRepository {
         var enderecoBD = addressRepository.findByCEP(enderecoRequest.CEP());
         if(enderecoBD == null)
             addressRepository.save(addressMapper.toEntity(enderecoRequest));
-        var restaurantDomain = restaurantMapper.toDomain(restaurantEntity);
         if(restaurantEntity.isActived()){
-            restaurantDomain.update(
-                    restaurant.getNomeRestaurante(),
-                    restaurant.getTipo(),
-                    enderecoRequest,
-                    restaurant.getAbertura(),
-                    restaurant.getFechamento()
-            );
+            restaurantEntity.setNomeRestaurante(restaurant.getNomeRestaurante());
+            restaurantEntity.setTipo(restaurant.getTipo());
+            restaurantEntity.setCEP(enderecoBD.getCEP());
+            restaurantEntity.setAbertura(restaurant.getAbertura());
+            restaurantEntity.setFechamento(restaurant.getFechamento());
         }
-        restaurantEntity = restaurantMapper.toEntity(restaurantDomain);
         restaurantRepository.save(restaurantEntity);
         restaurant = restaurantMapper.toDomain(restaurantEntity);
         restaurant.update(restaurant.getNomeRestaurante(), restaurant.getTipo(), addressMapper.toDomain(enderecoBD), restaurant.getAbertura(), restaurant.getFechamento());
@@ -70,8 +72,8 @@ public class RestaurantImplRepository implements RestaurantRepository {
     public Restaurant findByNomeRestaurante(String nomeRestaurante) {
         var restaurantEntity = restaurantRepository.findByNomeRestaurante(nomeRestaurante);
         var endereco = addressRepository.findByCEP(restaurantEntity.getCEP());
-        var restaurant = restaurantMapper.toDomain(restaurantEntity);
-        if(restaurant.isActived()){
+        if(restaurantEntity.isActived()){
+            var restaurant = restaurantMapper.toDomain(restaurantEntity);
             restaurant.update(restaurant.getNomeRestaurante(), restaurant.getTipo(), addressMapper.toDomain(endereco), restaurant.getAbertura(), restaurant.getFechamento());
             return restaurant;
         }
@@ -103,13 +105,14 @@ public class RestaurantImplRepository implements RestaurantRepository {
     public Restaurant delete(Restaurant restaurant) {
         var restaurantEntity = restaurantRepository.findByNomeRestaurante(restaurant.getNomeRestaurante());
         var endereco = addressRepository.findByCEP(restaurant.getEndereco().CEP());
-        var restaurantDomain = restaurantMapper.toDomain(restaurantEntity);
-        if(restaurantDomain.isActived()){
-            restaurantDomain.delete();
+        if(restaurantEntity.isActived()){
+            restaurantEntity.setActived(false);
+            restaurantRepository.save(restaurantEntity);
+            var restaurantDomain = restaurantMapper.toDomain(restaurantEntity);
             restaurantDomain.update(restaurantDomain.getNomeRestaurante(), restaurantDomain.getTipo(), addressMapper.toDomain(endereco), restaurantDomain.getAbertura(), restaurantDomain.getFechamento());
-            restaurantRepository.save(restaurantMapper.toEntity(restaurantDomain));
             return restaurantDomain;
         }
+        var restaurantDomain = restaurantMapper.toDomain(restaurantEntity);
         restaurantDomain.update(restaurantDomain.getNomeRestaurante(), restaurantDomain.getTipo(), addressMapper.toDomain(endereco), restaurantDomain.getAbertura(), restaurantDomain.getFechamento());
         return restaurantDomain;
     }

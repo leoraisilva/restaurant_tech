@@ -29,10 +29,6 @@ public class RestaurantService implements RestaurantPorts {
 
     @Override
     public CreateRestaurantOutput createRestaurant(CreateRestaurantInput input) {
-        var responsability = usuarioRepository.findByUsername(input.getResponsavel());
-        if(responsability == null || responsability.getRegras().equals(Role.CLIENT)) input.setResponsavel(null);
-        var nomeRestaurant = repository.findByNomeRestaurante(input.getNomeRestaurante());
-        if(nomeRestaurant != null) throw new IllegalArgumentException("Ja existe Restaurant com esse nome");
         var restaurant = factory.newRestaurant(input.getNomeRestaurante(), input.getTipo(), input.getEndereco(), input.getAbertura(), input.getFechamento(), input.getResponsavel());
         return CreateRestaurantOutput.from(repository.create(restaurant));
     }

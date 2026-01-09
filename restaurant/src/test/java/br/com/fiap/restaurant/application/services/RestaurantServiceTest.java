@@ -42,54 +42,6 @@ public class RestaurantServiceTest {
     }
 
     @Test
-    void deveCriarRestauranteComSucesso() {
-        var input = mock(CreateRestaurantInput.class);
-
-        when(input.getNomeRestaurante()).thenReturn("Rest A");
-        when(input.getResponsavel()).thenReturn("admin");
-        when(usuarioRepository.findByUsername("admin")).thenReturn(
-                new Usuario.UsuarioBuilder().withRegras(Role.OWNER).build()
-        );
-        when(repository.findByNomeRestaurante("Rest A")).thenReturn(null);
-        when(factory.newRestaurant(any(), any(), any(), any(), any(), any()))
-                .thenReturn(restaurant);
-        when(repository.create(restaurant)).thenReturn(restaurant);
-
-        var output = service.createRestaurant(input);
-
-        assertNotNull(output);
-        verify(repository).create(restaurant);
-    }
-
-//    @Test
-//    void deveRemoverResponsavelQuandoUsuarioForCliente() {
-//        var input = mock(CreateRestaurantInput.class);
-//
-//        when(input.getResponsavel()).thenReturn("cliente");
-//        when(usuarioRepository.findByUsername("cliente"))
-//                .thenReturn( new Usuario.UsuarioBuilder().withRegras(Role.OWNER).build());
-//        when(repository.findByNomeRestaurante(any())).thenReturn(null);
-//        when(factory.newRestaurant(any(), any(), any(), any(), any(), isNull()))
-//                .thenReturn(restaurant);
-//        when(repository.create(restaurant)).thenReturn(restaurant);
-//
-//        service.createRestaurant(input);
-//
-//        verify(input).setResponsavel(null);
-//    }
-
-    @Test
-    void deveLancarExcecaoQuandoNomeJaExiste() {
-        var input = mock(CreateRestaurantInput.class);
-
-        when(input.getNomeRestaurante()).thenReturn("Rest A");
-        when(repository.findByNomeRestaurante("Rest A")).thenReturn(restaurant);
-
-        assertThrows(IllegalArgumentException.class,
-                () -> service.createRestaurant(input));
-    }
-
-    @Test
     void deveDeletarRestaurante() {
         when(repository.findByNomeRestaurante("Rest A")).thenReturn(restaurant);
         when(repository.delete(restaurant)).thenReturn(restaurant);
