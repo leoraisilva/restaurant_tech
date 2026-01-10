@@ -74,3 +74,38 @@ Java / Maven (Opcional, para rodar sem Docker ou gerar o JAR)
 #### 3. Verifique os Contêineres:
 
     docker ps
+
+## 🚀 Fase 2: Expansão do Ecossistema e Gestão de Restaurantes
+
+Nesta segunda etapa, o sistema evolui de uma gestão de usuários para uma plataforma completa de administração de estabelecimentos gastronômicos. O foco principal é a implementação de Clean Architecture e a garantia de qualidade através de testes automatizados.
+
+### 🛠️ Novos Requisitos e Funcionalidades
+
+#### 1. Gestão de Tipos de Usuário
+
+<li> CRUD de Tipos: Estrutura para distinguir formalmente entre "Dono de Restaurante" e "Cliente". </li>
+
+<li> Associação Dinâmica: Funcionalidade para vincular usuários existentes a perfis específicos. </li>
+
+#### 2. Cadastro de Restaurantes
+
+<li> Gestão Completa: CRUD para estabelecimentos contendo Nome, Endereço, Tipo de Cozinha e Horário de Funcionamento. </li>
+
+<li> Vinculação de Responsável: Obrigatoriedade de atribuir um usuário do tipo "Dono" como responsável pelo local. </li>
+
+#### 3. Itens do Cardápio
+
+<li> Gestão de Produtos: Cadastro de itens com Nome, Descrição e Preço. </li>
+
+<li> Regras de Negócio: Controle de disponibilidade para consumo exclusivo no local e armazenamento de referência para fotos dos pratos. </li>
+
+### 🏗️ Arquitetura e Qualidade Técnica
+
+<li> Clean Architecture: O projeto foi reestruturado em camadas claras (Domain, Application, Infrastructure) para garantir a separação de responsabilidades. </li>
+
+<li> Testes Automatizados: * Unitários: Cobertura mínima de 80% da lógica de negócio.
+
+
+Integração: Garantia de funcionamento entre os componentes e o banco de dados. </li>
+
+<li> Docker Compose: Ambiente atualizado para suportar a execução integrada da aplicação Java e banco de dados de forma transparente. </li>
