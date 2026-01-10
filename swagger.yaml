@@ -9,12 +9,12 @@ info:
                 comida oferecida, em vez de se basearem na qualidade do sistema de gestão.
   version: 1.0.0
 servers:
-  - url: http://<hostname>/api/v1/usuario
+  - url: http://<hostname>/api/v1
   
 paths:
-  /auth/login:
+  /usuario/auth/login:
     post:
-      summary: solicita acesso com usuario e senha
+      summary: Solicita acesso com usuario e senha
       description: Este endpoint serve para ter acesso aos demais serviço.
       operationId: login
       requestBody:
@@ -50,7 +50,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error500"
-  /create:
+  /usuario/create:
     post:
       summary: Cria um novo usuario
       description: Este endpoint cria um usuario de acesso ao serviço.
@@ -67,7 +67,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/response"
+                $ref: "#/components/schemas/usuarioResponse"
         '400':
           description: Erro ao enviar a requisição, não reconhecendo o body enviado 
           content:
@@ -88,7 +88,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error500"
-  /search/{username}:
+  /usuario/search/{username}:
     get:
       summary: Busca um usuario
       description: Este endpoint busca um usuario existente no serviço.
@@ -106,7 +106,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/response"
+                $ref: "#/components/schemas/usuarioResponse"
         '400':
           description: Erro ao enviar a requisição, não reconhecendo o body enviado 
           content:
@@ -129,9 +129,9 @@ paths:
                 $ref: "#/components/schemas/Error500" 
       security:
       - bearerAuth: []
-  /list/number/{number}/page/{page}:
+  /usuario/list/number/{number}/page/{page}:
     get:
-      summary: lista os usuarios registrados
+      summary: Lista os usuarios registrados
       description: Este endpoint lista todos usuario existente no serviço.
       operationId: listUsuario
       parameters:
@@ -155,7 +155,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/responseList"
+                $ref: "#/components/schemas/usuarioList"
         '400':
           description: Erro ao enviar a requisição, não reconhecendo o body enviado 
           content:
@@ -178,7 +178,7 @@ paths:
                 $ref: "#/components/schemas/Error500" 
       security:
       - bearerAuth: []
-  /update/{username}:
+  /usuario/update/{username}:
     put:
       summary: Alterar um usuario
       description: Este endpoint altera o conteudo do usuario existente no serviço.
@@ -203,7 +203,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/response"
+                $ref: "#/components/schemas/usuarioResponse"
         '400':
           description: Erro ao enviar a requisição, não reconhecendo o body enviado 
           content:
@@ -226,7 +226,7 @@ paths:
                 $ref: "#/components/schemas/Error500" 
       security:
       - bearerAuth: []
-  /delete/{username}:
+  /usuario/delete/{username}:
     delete:
       summary: Desativa o usuario
       description: Este endpoint desativa a conta do usuario existente no serviço.
@@ -244,7 +244,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/response"
+                $ref: "#/components/schemas/usuarioResponse"
         '400':
           description: Erro ao enviar a requisição, não reconhecendo o body enviado 
           content:
@@ -267,7 +267,7 @@ paths:
                 $ref: "#/components/schemas/Error500" 
       security:
       - bearerAuth: []
-  /reset:
+  /usuario/reset:
     put:
       summary: Altera a senha do usuario
       description: Este endpoint altera a senha do usuario do serviço.
@@ -284,7 +284,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/response"
+                $ref: "#/components/schemas/usuarioResponse"
         '400':
           description: Erro ao enviar a requisição, não reconhecendo o body enviado 
           content:
@@ -307,6 +307,424 @@ paths:
                 $ref: "#/components/schemas/Error500"
       security:
       - bearerAuth: []
+  /cardapio/create:
+    post:
+      summary: Criar item do Cardapio
+      description: Este endpoint cria um Cardapio para especifico Restaurant.
+      operationId: createCardapio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/createCardapio"
+      responses:
+        '200':
+          description: Sucesso retorna o dados do Cardapio criado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardapioResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+      security:
+      - bearerAuth: []
+  /cardapio/update:
+    put:
+      summary: Alterar item do Cardapio
+      description: Este endpoint altera o item do Cardapio para especifico Restaurant.
+      operationId: updateCardapio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/updateCardapio"
+      responses:
+        '200':
+          description: Sucesso retorna o dados do Cardapio alterado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardapioResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+      security:
+      - bearerAuth: []
+  /cardapio/search/{product}:
+    get:
+      summary: Buscar item do Cardapio
+      description: Este endpoint busca um item do Cardapio para especifico Restaurante.
+      operationId: getCardapio
+      parameters:
+        - name: product
+          in: path
+          description: item a ser encontrado
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso retorna o dados do Cardapio buscado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardapioResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+      security:
+      - bearerAuth: []
+  /cardapio/list/number/{number}/page/{page}:
+    get:
+      summary: Lista os items do cardapio registrados
+      description: Este endpoint lista todos os itens do cardapio existente.
+      operationId: listCardapio
+      parameters:
+        - name: number
+          in: path
+          description: numero de pagina dividida na busca
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: path
+          description: numero de conteudo na pagina
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Sucesso retorna os dados buscado no banco com a data da criação, a data da ultima modificação, a regras com o tipo de itens registrado no cardapio.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardapioList"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
+      security:
+      - bearerAuth: []
+  /cardapio/delete/{product}:
+    delete:
+      summary: Desativa o item do cardapio
+      description: Este endpoint desativa o item presente no cardapio de especifico usuario.
+      operationId: deleteCardapio
+      parameters:
+        - name: product
+          in: path
+          description: username a ser alterado
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso retorna os dados da conta desativada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardapioResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
+  /restaurant/create:
+    post:
+      summary: Criar Restaurante
+      description: Este endpoint cria um especifico Restaurante.
+      operationId: createRestaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/createRestaurant"
+      responses:
+        '200':
+          description: Sucesso retorna o dados do Restaurante criado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restaurantResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+      security:
+      - bearerAuth: []
+  /restaurant/update:
+    put:
+      summary: Alterar Restaurant
+      description: Este endpoint altera o especifico Restaurant.
+      operationId: updateRestaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/updateRestaurant"
+      responses:
+        '200':
+          description: Sucesso retorna o dados do Restaurant alterado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restaurantResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+      security:
+      - bearerAuth: []
+  /restaurant/search/{nomeRestaurante}:
+    get:
+      summary: Busca Restaurant
+      description: Este endpoint busca um especifico Restaurante.
+      operationId: getRestaurant
+      parameters:
+        - name: nomeRestaurante
+          in: path
+          description: restaurant a ser encontrado
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso retorna o dados do Cardapio buscado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restaurantResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+      security:
+      - bearerAuth: []
+  /restaurant/list/number/{number}/page/{page}:
+    get:
+      summary: Lista os Restaurant registrados
+      description: Este endpoint lista todos os Restaurants existente.
+      operationId: listRestaurant
+      parameters:
+        - name: number
+          in: path
+          description: numero de pagina dividida na busca
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: path
+          description: numero de conteudo na pagina
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Sucesso retorna os dados buscado no banco com a data da criação, a data da ultima modificação, a regras com o Restaurant cadastrado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restaurantList"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
+      security:
+      - bearerAuth: []
+  /restaurant/delete/{nomeRestaurante}:
+    delete:
+      summary: Desativa o Restaurant
+      description: Este endpoint desativa o especifico Restaurant.
+      operationId: deleteRestaurant
+      parameters:
+        - name: nomeRestaurante
+          in: path
+          description: restaurant a ser desativado
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso retorna os dados da conta desativada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restaurantResponse"
+        '400':
+          description: Erro ao enviar a requisição, não reconhecendo o body enviado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+                  
+        '404':
+          description: Erro ao enviar a requisição, não reconhecendo o endpoint acessado 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+                  
+        '500':
+          description: Erro ao acessar o serviço, falha ao tentar acessar o serviço
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500" 
 components:
   schemas:
     create:
@@ -417,7 +835,7 @@ components:
           type: string
           format: byte
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZXN0YXVyYW50I
-    response:
+    usuarioResponse:
       type: object
       properties:
         nome:
@@ -478,7 +896,7 @@ components:
           format: date-time
           description: data de modificação do usuario
           example: 2025-12-11T23:26:29.0206602
-    responseList:
+    usuarioList:
       type: object
       properties:
         number:
@@ -497,8 +915,284 @@ components:
           type: array
           description: itens buscados
           items:
-            $ref: "#/components/schemas/response"
-            
+            $ref: "#/components/schemas/usuarioResponse"
+    cardapioList:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: numero de pagina
+          example: 1
+        page:
+          type: integer
+          description: quantidade na pagina
+          example: 1
+        total:
+          type: integer
+          description: total de pagina apresentado
+          example: 1
+        items:
+          type: array
+          description: itens buscados
+          items:
+            $ref: "#/components/schemas/cardapioResponse"
+    restaurantList:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: numero de pagina
+          example: 1
+        page:
+          type: integer
+          description: quantidade na pagina
+          example: 1
+        total:
+          type: integer
+          description: total de pagina apresentado
+          example: 1
+        items:
+          type: array
+          description: itens buscados
+          items:
+            $ref: "#/components/schemas/restaurantResponse"
+    createCardapio:
+      type: object
+      properties:
+        product:
+          type: string
+          description: nome do item do cardapio
+          example: Feijoada
+        descricao:
+          type: string
+          description: descrição do item do cardapio
+          example: alimento tipico brasileiro
+        preco:
+          type: number
+          format: decimal
+          description: valor do item do cardapio
+          example: 25.00
+        imagem:
+          type: string
+          description: url/base64 da imagem do item do cardapio
+          example: https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480/img/recipe/ras/Assets/bf0b6a9ffe1e83960ebf31ed8af6d05f/Derivates/eabadaf71c49ba2b4c70d7317518fa5225c6bc82.jpg
+        entrega:
+          type: boolean
+          description: indicação se o item entrega no local
+          example: true
+        restaurante:
+          type: string
+          description: restaurante que oferece o item
+          example: Brasileiro
+    updateCardapio:
+      type: object
+      properties:
+        product:
+          type: string
+          description: nome do item do cardapio
+          example: Feijoada
+        descricao:
+          type: string
+          description: descrição do item do cardapio
+          example: alimento tipico brasileiro
+        preco:
+          type: number
+          format: decimal
+          description: valor do item do cardapio
+          example: 25.00
+        imagem:
+          type: string
+          description: url/base64 da imagem do item do cardapio
+          example: https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480/img/recipe/ras/Assets/bf0b6a9ffe1e83960ebf31ed8af6d05f/Derivates/eabadaf71c49ba2b4c70d7317518fa5225c6bc82.jpg
+        entrega:
+          type: boolean
+          description: indicação se o item entrega no local
+          example: true
+      
+    cardapioResponse:
+      type: object
+      properties:
+        product:
+          type: string
+          description: nome do item do cardapio
+          example: Feijoada
+        descricao:
+          type: string
+          description: descrição do item do cardapio
+          example: alimento tipico brasileiro
+        preco:
+          type: number
+          format: decimal
+          description: valor do item do cardapio
+          example: 25.00
+        imagem:
+          type: string
+          description: url/base64 da imagem do item do cardapio
+          example: https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480/img/recipe/ras/Assets/bf0b6a9ffe1e83960ebf31ed8af6d05f/Derivates/eabadaf71c49ba2b4c70d7317518fa5225c6bc82.jpg
+        entrega:
+          type: boolean
+          description: indicação se o item entrega no local
+          example: true
+        restaurante:
+          type: string
+          description: restaurante que oferece o item
+          example: Brasileiro
+        disponivel:
+          type: boolean
+          description: indica se o item esta disponivel
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+          description: data de criação do item
+          example: 2025-10-11T23:26:29.0206602
+        modifiedAt:
+          type: string
+          format: date-time
+          description: data de modificação do item
+          example: 2025-12-11T23:26:29.0206602
+    createRestaurant:
+      type: object
+      properties:
+        nomeRestaurante:
+          type: string
+          description: nome do restaurante
+          example: Brasileiro
+        tipo:
+          type: string
+          description: segmento do Restaurante
+          example: prato tipico brasileiro
+        endereco:
+          type: object
+          properties:
+            CEP:
+              type: string
+              description: cep do endereço somente numeral
+              example: 01001000
+            logradouro:
+              type: string
+              description: endereço do presente no cep
+              example: Rua Osvaldo
+            bairro:
+              type: string
+              description: bairro do presente no cep
+              example: Sé
+            cidade:
+              type: string
+              description: cidade do presente no cep
+              example: São Paulo
+        abertura:
+          type: string
+          format: date-time
+          description: data e hora que abre o restaurante
+          example: 2025-10-11T23:26:29.0206602
+        fechamento:
+          type: string
+          format: date-time
+          description: data e hora que fecha o restaurante
+          example: 2025-10-11T23:26:29.0206602
+        responsavel:
+          type: string
+          description: o usuario responsavel pelo restaurante
+          example: joao
+    updateRestaurant:
+      type: object
+      properties:
+        nomeRestaurante:
+          type: string
+          description: nome do restaurante
+          example: Brasileiro
+        tipo:
+          type: string
+          description: segmento do Restaurante
+          example: prato tipico brasileiro
+        endereco:
+          type: object
+          properties:
+            CEP:
+              type: string
+              description: cep do endereço somente numeral
+              example: 01001000
+            logradouro:
+              type: string
+              description: endereço do presente no cep
+              example: Rua Osvaldo
+            bairro:
+              type: string
+              description: bairro do presente no cep
+              example: Sé
+            cidade:
+              type: string
+              description: cidade do presente no cep
+              example: São Paulo
+        abertura:
+          type: string
+          format: date-time
+          description: data e hora que abre o restaurante
+          example: 2025-10-11T23:26:29.0206602
+        fechamento:
+          type: string
+          format: date-time
+          description: data e hora que fecha o restaurante
+          example: 2025-10-11T23:26:29.0206602
+    restaurantResponse:
+      type: object
+      properties:
+        nomeRestaurante:
+          type: string
+          description: nome do restaurante
+          example: Brasileiro
+        tipo:
+          type: string
+          description: segmento do Restaurante
+          example: prato tipico brasileiro
+        endereco:
+          type: object
+          properties:
+            CEP:
+              type: string
+              description: cep do endereço somente numeral
+              example: 01001000
+            logradouro:
+              type: string
+              description: endereço do presente no cep
+              example: Rua Osvaldo
+            bairro:
+              type: string
+              description: bairro do presente no cep
+              example: Sé
+            cidade:
+              type: string
+              description: cidade do presente no cep
+              example: São Paulo
+        abertura:
+          type: string
+          format: date-time
+          description: data e hora que abre o restaurante
+          example: 2025-10-11T23:26:29.0206602
+        fechamento:
+          type: string
+          format: date-time
+          description: data e hora que fecha o restaurante
+          example: 2025-10-11T23:26:29.0206602
+        responsavel:
+          type: string
+          description: o usuario responsavel pelo restaurante
+          example: joao
+        actived:
+          type: boolean
+          description: indica se o restaurante esta disponivel
+          example: true
+        createAt:
+          type: string
+          format: date-time
+          description: data de criação do restaurante
+          example: 2025-10-11T23:26:29.0206602
+        modifiedAt:
+          type: string
+          format: date-time
+          description: data de modificação do restaurante
+          example: 2025-12-11T23:26:29.0206602
     Error500:
       type: object
       properties:
@@ -521,7 +1215,7 @@ components:
         instance: 
           type: string
           description: endpoint do erro
-          example: /api/v1/usuario
+          example: /api/v1/
     Error404:
       type: object
       properties:
@@ -544,7 +1238,7 @@ components:
         instance: 
           type: string
           description: endpoint do erro
-          example: /api/v1/usuario
+          example: /api/v1/
     Error400:
       type: object
       properties:
@@ -567,7 +1261,7 @@ components:
         instance: 
           type: string
           description: endpoint do erro
-          example: /api/v1/usuario
+          example: /api/v1/
         
   securitySchemes:
     bearerAuth:

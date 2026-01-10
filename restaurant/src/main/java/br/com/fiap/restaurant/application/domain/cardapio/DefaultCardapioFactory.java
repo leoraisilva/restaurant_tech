@@ -1,0 +1,31 @@
+package br.com.fiap.restaurant.application.domain.cardapio;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+public class DefaultCardapioFactory implements CardapioFactory{
+    @Override
+    public Cardapio newCardapio(String product, String descricao, double preco, String imagem, boolean entrega, String restaurant) {
+        Objects.requireNonNull(product, "Produto Obrigatorio");
+        if(verifyRestaurant(restaurant)) {
+            return new Cardapio.CardapioBuilder()
+                    .withNomeProduto(product)
+                    .withDescricao(descricao)
+                    .withPreco(preco)
+                    .withImagem(imagem)
+                    .withEntrega(entrega)
+                    .withRestaurant(restaurant)
+                    .withDisponivel(true)
+                    .withCreateAt(LocalDateTime.now())
+                    .withModifiedAt(LocalDateTime.now())
+                    .build();
+        }
+        throw new IllegalArgumentException("Restaurant não Encontrado!!");
+    }
+
+    private boolean verifyRestaurant(String restaurant) {
+        if(restaurant != null)
+            return true;
+        return false;
+    }
+}

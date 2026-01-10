@@ -1,5 +1,6 @@
 package br.com.fiap.restaurant.infra.adapter.outbound.exception;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.hibernate.sql.exec.ExecutionException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +30,18 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    protected ResponseEntity<Object> handleIllegalArgument(RuntimeException e, WebRequest request) {
+        var response = new ResponseException(
+                ChangeSetPersister.NotFoundException.class.getTypeName(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage(),
+                HttpHeaders.SERVER
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(value = {NullPointerException.class})
     protected ResponseEntity<Object> handleNullPoint(RuntimeException e, WebRequest request) {
         var response = new ResponseException(
@@ -47,7 +60,7 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
                 ExecutionException.class.getTypeName(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 HttpStatus.BAD_REQUEST.value(),
-                e.getMessage(),
+                "Request Not Accept",
                 request.getDescription(true).split(";")[0].replace("uri=", "")
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

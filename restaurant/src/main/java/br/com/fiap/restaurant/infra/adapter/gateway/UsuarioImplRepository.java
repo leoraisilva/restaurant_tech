@@ -1,4 +1,4 @@
-package br.com.fiap.restaurant.infra.adapter;
+package br.com.fiap.restaurant.infra.adapter.gateway;
 
 import br.com.fiap.restaurant.application.domain.page.Page;
 import br.com.fiap.restaurant.application.domain.pagination.Pagination;

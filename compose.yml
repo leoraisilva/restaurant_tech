@@ -13,6 +13,16 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres-network
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "9000:80"
+    networks:
+      - postgres-network
   app:
     container_name: restaurant-app
     build:
