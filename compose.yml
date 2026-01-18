@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   postgres:
-    image: postgres
+    image: postgres:16
     container_name: restaurant
     environment:
       POSTGRES_USER: ${POSTGRES_USERNAME}
@@ -11,16 +11,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - postgres-network
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "9000:80"
     networks:
       - postgres-network
   app:
